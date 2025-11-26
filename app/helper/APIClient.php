@@ -61,5 +61,35 @@ class APIClient {
         // TODO: Update endpoint path to fetch government service detail by ID
         return $this->callAPI("/services/{$serviceId}");
     }
+
+    // Lookup an electricity bill from NEA by service consumer number (sc_no)
+    public function getNEABill($sc_no) {
+        // If baseUrl/apiKey are placeholders we cannot call external API from here in dev
+        if (empty($sc_no)) {
+            throw new Exception('Service consumer number required');
+        }
+
+        // Use the official NEA API endpoint directly for this lookup
+        $url = 'https://api.nea.gov.np/bill?sc_no=' . urlencode($sc_no);
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Accept: application/json'
+        ]);
+        $response = curl_exec($ch);
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($httpcode != 200) {
+            throw new Exception('NEA API request failed with status code ' . $httpcode);
+        }
+
+        $data = json_decode($response, true);
+        if ($data === null) {
+            throw new Exception('Invalid JSON returned from NEA API');
+        }
+        return $data;
+    }
 }
 ?>

@@ -1,4 +1,4 @@
-1<?php
+<?php
 require_once __DIR__ . '/../config/database.php';
 
 class User {
@@ -108,15 +108,47 @@ class User {
         }
     }
 
-    public function recordTransaction($sender_id, $receiver_id, $amount, $type, $description = null) {
+    public function recordTransaction($sender_id, $receiver_id, $amount, $type, $description = null, $txn_id = null, $provider = null, $customer_ref = null, $method = null, $provider_response = null, $status = 'completed') {
         try {
-            $query = "INSERT INTO transactions (sender_id, receiver_id, amount, type, description) VALUES (:sender_id, :receiver_id, :amount, :type, :description)";
+            // Dynamically build INSERT based on which columns exist in the transactions table.
+            $colsStmt = $this->conn->query("SHOW COLUMNS FROM transactions");
+            $existingCols = $colsStmt->fetchAll(PDO::FETCH_COLUMN);
+            $available = array_flip($existingCols);
+
+            $mapping = [
+                'sender_id' => $sender_id,
+                'receiver_id' => $receiver_id,
+                'amount' => $amount,
+                'type' => $type,
+                'description' => $description,
+                'txn_id' => $txn_id,
+                'provider' => $provider,
+                'customer_ref' => $customer_ref,
+                'method' => $method,
+                'provider_response' => $provider_response,
+                'status' => $status
+            ];
+
+            $insertCols = [];
+            $placeholders = [];
+            $params = [];
+            foreach ($mapping as $col => $val) {
+                if (isset($available[$col])) {
+                    $insertCols[] = $col;
+                    $placeholders[] = ':' . $col;
+                    $params[$col] = $val;
+                }
+            }
+
+            if (empty($insertCols)) {
+                throw new Exception('No transaction columns available to insert.');
+            }
+
+            $query = "INSERT INTO transactions (" . implode(', ', $insertCols) . ") VALUES (" . implode(', ', $placeholders) . ")";
             $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(':sender_id', $sender_id);
-            $stmt->bindParam(':receiver_id', $receiver_id);
-            $stmt->bindParam(':amount', $amount);
-            $stmt->bindParam(':type', $type);
-            $stmt->bindParam(':description', $description);
+            foreach ($params as $col => $val) {
+                $stmt->bindValue(':' . $col, $val);
+            }
             return $stmt->execute();
         } catch (PDOException $e) {
             throw new Exception("Transaction recording failed: " . $e->getMessage());

@@ -1,0 +1,46 @@
+# Logs
+logs/
+*.log
+*.txt
+
+# Environment & Config
+.env
+.env.local
+.env.*.local
+
+# IDE & Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Composer
+vendor/
+composer.lock
+
+# PHP Session & Temp files
+session/
+tmp/
+temp/
+*.tmp
+
+# Database backups
+*.sql
+!database/*.sql
+!database/migrations/*.sql
+
+# Private / sensitive
+private/
+secrets/
+config/database.php.local
+
+# Build artifacts
+dist/
+build/
+
+# Node modules (if used)
+node_modules/
+package-lock.json
