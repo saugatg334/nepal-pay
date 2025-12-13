@@ -13,7 +13,24 @@ $walletCtrl = new WalletController();
 $billers = [
     1 => ['name' => 'Nepal Electricity Authority', 'type' => 'electricity', 'nepalpay_phone' => '9800000001', 'bank' => 'NEA Bank A/C 1001'],
     2 => ['name' => 'NCell Mobile', 'type' => 'mobile', 'nepalpay_phone' => '9800000002', 'bank' => 'NCell Bank A/C 2001'],
-    3 => ['name' => 'Internet Provider', 'type' => 'internet', 'nepalpay_phone' => '9800000003', 'bank' => 'ISP Bank A/C 3001'],
+    3 => ['name' => 'WorldLink Internet', 'type' => 'internet', 'nepalpay_phone' => '9800000003', 'bank' => 'WorldLink Bank A/C 3001'],
+    4 => ['name' => 'NTC (Nepal Telecom)', 'type' => 'mobile', 'nepalpay_phone' => '9800000004', 'bank' => 'NTC Bank A/C 4001'],
+    5 => ['name' => 'SmartCell', 'type' => 'mobile', 'nepalpay_phone' => '9800000005', 'bank' => 'SmartCell Bank A/C 5001'],
+    6 => ['name' => 'DishHome TV', 'type' => 'television', 'nepalpay_phone' => '9800000006', 'bank' => 'DishHome Bank A/C 6001'],
+    7 => ['name' => 'Kathmandu Upatyaka Khanepani Limited (KUKL)', 'type' => 'water', 'nepalpay_phone' => '9800000007', 'bank' => 'KUKL Bank A/C 7001'],
+    8 => ['name' => 'Ncell Top-up', 'type' => 'mobile_topup', 'nepalpay_phone' => '9800000008', 'bank' => 'NCell Bank A/C 8001'],
+    9 => ['name' => 'NTC Top-up', 'type' => 'mobile_topup', 'nepalpay_phone' => '9800000009', 'bank' => 'NTC Bank A/C 9001'],
+    10 => ['name' => 'SmartCell Top-up', 'type' => 'mobile_topup', 'nepalpay_phone' => '9800000010', 'bank' => 'SmartCell Bank A/C 10001'],
+    11 => ['name' => 'IME Pay', 'type' => 'wallet', 'nepalpay_phone' => '9800000011', 'bank' => 'IME Bank A/C 11001'],
+    12 => ['name' => 'Prabhu Pay', 'type' => 'wallet', 'nepalpay_phone' => '9800000012', 'bank' => 'Prabhu Bank A/C 12001'],
+    13 => ['name' => 'Government Tax Payment', 'type' => 'government', 'nepalpay_phone' => '9800000013', 'bank' => 'IRD Bank A/C 13001'],
+    14 => ['name' => 'Insurance Premium', 'type' => 'insurance', 'nepalpay_phone' => '9800000014', 'bank' => 'Insurance Bank A/C 14001'],
+    15 => ['name' => 'Education Fees', 'type' => 'education', 'nepalpay_phone' => '9800000015', 'bank' => 'Education Bank A/C 15001'],
+    16 => ['name' => 'Broadband Internet', 'type' => 'internet', 'nepalpay_phone' => '9800000016', 'bank' => 'Broadband Bank A/C 16001'],
+    17 => ['name' => 'Mobile Data Pack', 'type' => 'mobile_data', 'nepalpay_phone' => '9800000017', 'bank' => 'Data Bank A/C 17001'],
+    18 => ['name' => 'Gas Cylinder', 'type' => 'gas', 'nepalpay_phone' => '9800000018', 'bank' => 'Gas Bank A/C 18001'],
+    19 => ['name' => 'Cable TV', 'type' => 'television', 'nepalpay_phone' => '9800000019', 'bank' => 'Cable Bank A/C 19001'],
+    20 => ['name' => 'Municipal Tax', 'type' => 'government', 'nepalpay_phone' => '9800000020', 'bank' => 'Municipal Bank A/C 20001'],
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

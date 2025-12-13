@@ -308,5 +308,17 @@ class User {
             throw new Exception("KYC documents update failed: " . $e->getMessage());
         }
     }
+
+    public function updateProfilePicture($id, $profile_picture_path) {
+        try {
+            $query = "UPDATE " . $this->table_name . " SET profile_picture = :profile_picture WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':profile_picture', $profile_picture_path);
+            $stmt->bindParam(':id', $id);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Profile picture update failed: " . $e->getMessage());
+        }
+    }
 }
 ?>

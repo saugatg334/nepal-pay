@@ -1,8 +1,10 @@
-<?php
+4
+1<?php
 require_once __DIR__ . '/../app/helpers/session_helper.php';
 require_once __DIR__ . '/../app/models/User.php';
 require_once __DIR__ . '/../app/controller/WalletController.php';
 
+$userModel = new User();
 $user_id = $_SESSION['user_id'] ?? 1;
 $error_msg = null;
 
@@ -10,9 +12,12 @@ try {
   $walletCtrl = new WalletController();
   $balance = $walletCtrl->getWalletBalance($user_id);
   $transactions = $walletCtrl->getTransactionHistory($user_id, 10);
+  $user = $userModel->getUserById($user_id);
+  $profile_picture = $user['profile_picture'] ?? null;
 } catch (Exception $e) {
   $balance = 0.00;
   $transactions = [];
+  $profile_picture = null;
   $error_msg = $e->getMessage();
 }
 ?>
@@ -82,6 +87,17 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.classList.add("hidden");
     sendForm.reset();
   });
+
+  // Toggle provider field for topup
+  const sendType = document.getElementById('sendType');
+  sendType.addEventListener('change', function() {
+    const providerField = document.getElementById('providerField');
+    if (this.value === 'topup' || this.value === 'fulltopup') {
+      providerField.classList.remove('hidden');
+    } else {
+      providerField.classList.add('hidden');
+    }
+  });
 });
 </script>
 
@@ -94,13 +110,13 @@ document.addEventListener("DOMContentLoaded", () => {
   <?php
     $user_name = $_SESSION['user_name'] ?? 'User';
   ?>
-  <aside class="col-span-3 bg-gradient-to-b from-red-600 to-red-700 text-white p-6" role="navigation" aria-label="Main sidebar">
+  <aside class="col-span-3 bg-gradient-to-b from-blue-600 to-blue-700 text-white p-6" role="navigation" aria-label="Main sidebar">
     <div class="flex items-center justify-between gap-3 mb-6">
       <div class="flex items-center gap-3">
-        <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-xl font-bold">NP</div>
+        <img src="assets/logo.svg" alt="NepalPay Logo" class="w-12 h-12 rounded-full">
         <div>
           <div class="text-xs opacity-80">Welcome</div>
-          <div class="font-semibold text-lg"><?=  ?> htmlspecialchars($user_name); ?></div>
+          <div class="font-semibold text-lg"><?= htmlspecialchars($user_name); ?></div>
         </div>
       </div>
 
@@ -210,7 +226,11 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="text-gray-500">Offline</div>
             <div class="font-semibold">Profile</div>
           </div>
-          <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">SG</div>
+          <?php if ($profile_picture): ?>
+            <img src="<?= htmlspecialchars($profile_picture); ?>" alt="Profile Picture" class="w-10 h-10 rounded-full cursor-pointer openProfileModal">
+          <?php else: ?>
+            <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center cursor-pointer openProfileModal">SG</div>
+          <?php endif; ?>
         </div>
       </div>
     </header>
@@ -243,6 +263,13 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="mt-4"><span class="mt-4 px-4 py-2 rounded-lg border inline-block">Pay Bill</span></div>
         </div>
         </a>
+
+        <div class="p-5 bg-white rounded-2xl shadow hover-card">
+          <p class="text-xs text-gray-400 uppercase">Security</p>
+          <h3 class="text-lg font-semibold mt-2">Change Password</h3>
+          <p class="text-sm mt-2 text-gray-500">Update your account password.</p>
+          <button class="openPasswordModal mt-4 px-4 py-2 rounded-lg bg-purple-600 text-white">Change Password</button>
+        </div>
       </div>
 
       <div class="p-5 glass rounded-2xl shadow">
@@ -252,27 +279,11 @@ document.addEventListener("DOMContentLoaded", () => {
         </p>
         <p class="mt-2 text-gray-500 text-sm">Available for payments</p>
         <div class="mt-4 flex gap-3">
-          <button class="px-4 py-2 bg-green-600 text-white rounded-lg">Receive</button>
+          <button id="receiveBtn" class="px-4 py-2 bg-green-600 text-white rounded-lg">Receive</button>
           <button class="openSendModal px-4 py-2 bg-red-600 text-white rounded-lg">Send</button>
         </div>
 
-        <!-- Quick Top-up -->
-        <div class="mt-5">
-          <div class="flex items-center justify-between">
-            <div class="text-sm text-gray-500">Quick Top-Up</div>
-            <a href="pay.php" class="text-indigo-600 text-sm">Full top-up</a>
-          </div>
 
-          <div class="mt-3 grid grid-cols-3 gap-2">
-            <button class="topupBtn p-3 bg-white/80 border rounded-lg text-sm hover:bg-white" data-biller="2">NCell</button>
-            <button class="topupBtn p-3 bg-white/80 border rounded-lg text-sm hover:bg-white" data-biller="4">NTC</button>
-            <button class="topupBtn p-3 bg-white/80 border rounded-lg text-sm hover:bg-white" data-biller="5">SmartCell</button>
-          </div>
-
-          <div class="mt-3">
-            <input id="providerSearch" type="search" placeholder="Find provider (NTC, NCell, SmartCell)" class="w-full px-3 py-2 border rounded-lg text-sm" />
-          </div>
-        </div>
       </div>
 
     </section>
@@ -345,8 +356,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
     <form id="sendForm" class="mt-4 space-y-3">
       <div>
+        <label class="text-xs text-gray-500">Type</label>
+        <select name="type" id="sendType" class="w-full border px-3 py-2 rounded">
+          <option value="phone">Send to Phone</option>
+          <option value="wallet">Send to Wallet</option>
+          <option value="bank">Send to Bank</option>
+          <option value="merchant">Pay Merchant</option>
+          <option value="utilities">Pay Utilities</option>
+          <option value="bills">Pay Bills</option>
+          <option value="internet">Pay Internet</option>
+          <option value="electricity">Pay Electricity</option>
+          <option value="topup">Top-Up</option>
+          //<option value="fulltopup">Full Top-Up</option>
+        </select>
+      </div>
+      <div id="providerField" class="hidden">
+        <label class="text-xs text-gray-500">Provider</label>
+        <select name="provider" class="w-full border px-3 py-2 rounded">
+          <option value="2">NCell</option>
+          <option value="4">NTC</option>
+          <option value="5">SmartCell</option>
+        </select>
+      </div>
+      <div>
         <label class="text-xs text-gray-500">To</label>
-        <input name="to" class="w-full border px-3 py-2 rounded">
+        <input name="to" id="sendTo" class="w-full border px-3 py-2 rounded" placeholder="Phone, wallet ID, account number">
       </div>
       <div>
         <label class="text-xs text-gray-500">Amount (Rs)</label>
@@ -360,6 +394,37 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="flex justify-end gap-3 mt-4">
         <button type="button" id="cancelBtn" class="px-4 py-2 border rounded-lg">Cancel</button>
         <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-lg">Send</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Receive Modal -->
+<div id="receiveModal" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center p-6">
+  <div class="bg-white p-6 rounded-2xl w-full max-w-md">
+    <h2 class="text-lg font-semibold">Receive Money</h2>
+
+    <form id="receiveForm" class="mt-4 space-y-3">
+      <div>
+        <label class="text-xs text-gray-500">Provider</label>
+        <select id="receive_provider" class="w-full border px-3 py-2 rounded">
+          <option value="2">NCell</option>
+          <option value="4">NTC</option>
+          <option value="5">SmartCell</option>
+        </select>
+      </div>
+      <div>
+        <label class="text-xs text-gray-500">Mobile Number</label>
+        <input name="reference" id="receive_reference" class="w-full border px-3 py-2 rounded" placeholder="Enter phone number">
+      </div>
+      <div>
+        <label class="text-xs text-gray-500">Amount (Rs)</label>
+        <input name="amount" type="number" step="0.01" min="1" class="w-full border px-3 py-2 rounded">
+      </div>
+
+      <div class="flex justify-end gap-3 mt-4">
+        <button type="button" id="receiveCancel" class="px-4 py-2 border rounded-lg">Cancel</button>
+        <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg">Request</button>
       </div>
     </form>
   </div>
@@ -400,6 +465,54 @@ document.addEventListener("DOMContentLoaded", () => {
   </div>
 </div>
 
+<!-- Password Change Modal -->
+<div id="passwordModal" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center p-6">
+  <div class="bg-white p-6 rounded-2xl w-full max-w-md">
+    <h2 class="text-lg font-semibold">Change Password</h2>
+
+    <form id="passwordForm" method="POST" action="change_password.php" class="mt-4 space-y-3">
+      <div>
+        <label class="text-xs text-gray-500">Current Password</label>
+        <input name="current_password" type="password" class="w-full border px-3 py-2 rounded" required>
+      </div>
+
+      <div>
+        <label class="text-xs text-gray-500">New Password</label>
+        <input name="new_password" type="password" class="w-full border px-3 py-2 rounded" required>
+      </div>
+
+      <div>
+        <label class="text-xs text-gray-500">Confirm New Password</label>
+        <input name="confirm_password" type="password" class="w-full border px-3 py-2 rounded" required>
+      </div>
+
+      <div class="flex justify-end gap-3 mt-4">
+        <button type="button" id="passwordCancel" class="px-4 py-2 border rounded-lg">Cancel</button>
+        <button type="submit" class="px-4 py-2 bg-purple-600 text-white rounded-lg">Change Password</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Profile Picture Change Modal -->
+<div id="profileModal" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center p-6">
+  <div class="bg-white p-6 rounded-2xl w-full max-w-md">
+    <h2 class="text-lg font-semibold">Change Profile Picture</h2>
+
+    <form id="profileForm" method="POST" action="change_profile.php" enctype="multipart/form-data" class="mt-4 space-y-3">
+      <div>
+        <label class="text-xs text-gray-500">Upload New Picture</label>
+        <input name="profile_picture" type="file" accept="image/*" class="w-full border px-3 py-2 rounded" required>
+      </div>
+
+      <div class="flex justify-end gap-3 mt-4">
+        <button type="button" id="profileCancel" class="px-4 py-2 border rounded-lg">Cancel</button>
+        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg">Change Picture</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <script>
 document.addEventListener('DOMContentLoaded', function(){
   // Ensure sidebar links always navigate (fallback if other handlers call preventDefault)
@@ -422,6 +535,59 @@ document.addEventListener('DOMContentLoaded', function(){
     a.addEventListener('click', navNow, true);
     a.addEventListener('mousedown', navNow, true);
   });
+  const receiveModal = document.getElementById('receiveModal');
+  const receiveBtn = document.getElementById('receiveBtn');
+  const receiveCancel = document.getElementById('receiveCancel');
+  const receiveProvider = document.getElementById('receive_provider');
+  const receiveReference = document.getElementById('receive_reference');
+  const receiveForm = document.getElementById('receiveForm');
+
+  // Receive modal functionality
+  if (receiveBtn) {
+    receiveBtn.addEventListener('click', function(){
+      receiveModal.classList.remove('hidden');
+    });
+  }
+
+  if (receiveCancel) {
+    receiveCancel.addEventListener('click', function(){
+      receiveModal.classList.add('hidden');
+      receiveForm.reset();
+    });
+  }
+
+  if (receiveForm) {
+    receiveForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      const provider = receiveProvider.value;
+      const reference = receiveReference.value.trim();
+      const amount = parseFloat(receiveForm.amount.value);
+
+      if (!reference || !amount || amount <= 0) {
+        alert('Please fill in all fields correctly.');
+        return;
+      }
+
+      // Validate phone number prefix based on provider
+      if (provider === '2' && !reference.startsWith('98')) {
+        alert('NCell number must start with 98');
+        return;
+      }
+      if (provider === '4' && !reference.startsWith('97')) {
+        alert('NTC number must start with 97');
+        return;
+      }
+      if (provider === '5' && !reference.startsWith('96')) {
+        alert('SmartCell number must start with 96');
+        return;
+      }
+
+      alert(`Request sent for Rs ${amount} to ${reference}`);
+      receiveModal.classList.add('hidden');
+      receiveForm.reset();
+    });
+  }
+
   const topupModal = document.getElementById('topupModal');
   const topupBtns = document.querySelectorAll('.topupBtn');
   const topupCancel = document.getElementById('topupCancel');
@@ -435,15 +601,48 @@ document.addEventListener('DOMContentLoaded', function(){
     '5': 'SmartCell'
   };
 
+  // Function to detect provider based on phone number
+  function detectProvider(phoneNumber) {
+    if (phoneNumber.startsWith('97')) {
+      return '4'; // NTC
+    } else if (phoneNumber.startsWith('98')) {
+      return '2'; // NCell
+    } else if (phoneNumber.startsWith('96')) {
+      return '5'; // SmartCell
+    }
+    return null; // Unknown
+  }
+
   topupBtns.forEach(b => b.addEventListener('click', function(){
     const id = this.getAttribute('data-biller');
     topupBiller.value = id;
     topupProvName.value = providerMap[id] || '';
+    // Prepend prefix based on provider
+    let prefix = '';
+    if (id === '2') prefix = '98'; // NCell
+    else if (id === '4') prefix = '97'; // NTC
+    else if (id === '5') prefix = '96'; // SmartCell
+    topupReference.value = prefix;
     topupModal.classList.remove('hidden');
-    document.getElementById('topup_amount').focus();
+    document.getElementById('topup_reference').focus();
   }));
 
   topupCancel.addEventListener('click', function(){ topupModal.classList.add('hidden'); });
+
+  // Auto-detect provider based on phone number input
+  const topupReference = document.getElementById('topup_reference');
+  if (topupReference) {
+    topupReference.addEventListener('input', function(){
+      const phoneNumber = this.value.trim();
+      if (phoneNumber.length >= 2) {
+        const detectedId = detectProvider(phoneNumber);
+        if (detectedId) {
+          topupBiller.value = detectedId;
+          topupProvName.value = providerMap[detectedId] || '';
+        }
+      }
+    });
+  }
 
   if (providerSearch) {
     providerSearch.addEventListener('input', function(){
@@ -459,5 +658,122 @@ document.addEventListener('DOMContentLoaded', function(){
       }
     });
   }
+
+  // Validate phone number prefix on topup form submit
+  const topupForm = document.getElementById('topupForm');
+  if (topupForm) {
+    topupForm.addEventListener('submit', function(e){
+      const biller = topupBiller.value;
+      const reference = topupReference.value.trim();
+
+      if (!reference) {
+        alert('Please enter a phone number.');
+        e.preventDefault();
+        return;
+      }
+
+      if (biller === '2' && !reference.startsWith('98')) {
+        alert('NCell number must start with 98');
+        e.preventDefault();
+        return;
+      }
+
+      if (biller === '4' && !reference.startsWith('97')) {
+        alert('NTC number must start with 97');
+        e.preventDefault();
+        return;
+      }
+
+      if (biller === '5' && !reference.startsWith('96')) {
+        alert('SmartCell number must start with 96');
+        e.preventDefault();
+        return;
+      }
+    });
+  }
+
+  // Password change modal
+  const passwordModal = document.getElementById('passwordModal');
+  const passwordBtns = document.querySelectorAll('.openPasswordModal');
+  const passwordCancel = document.getElementById('passwordCancel');
+  const passwordForm = document.getElementById('passwordForm');
+
+  passwordBtns.forEach(btn => btn.addEventListener('click', function(){
+    passwordModal.classList.remove('hidden');
+  }));
+
+  passwordCancel.addEventListener('click', function(){
+    passwordModal.classList.add('hidden');
+    passwordForm.reset();
+  });
+
+  passwordForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    const currentPassword = passwordForm.current_password.value;
+    const newPassword = passwordForm.new_password.value;
+    const confirmPassword = passwordForm.confirm_password.value;
+
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      alert('Please fill in all fields.');
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      alert('New password and confirmation do not match.');
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      alert('New password must be at least 6 characters long.');
+      return;
+    }
+
+    // Here you would typically send the data to the server
+    alert('Password change functionality would be implemented here.');
+    passwordModal.classList.add('hidden');
+    passwordForm.reset();
+  });
+
+  // Profile picture change modal
+  const profileModal = document.getElementById('profileModal');
+  const profileBtns = document.querySelectorAll('.openProfileModal');
+  const profileCancel = document.getElementById('profileCancel');
+  const profileForm = document.getElementById('profileForm');
+
+  profileBtns.forEach(btn => btn.addEventListener('click', function(){
+    profileModal.classList.remove('hidden');
+  }));
+
+  profileCancel.addEventListener('click', function(){
+    profileModal.classList.add('hidden');
+    profileForm.reset();
+  });
+
+  profileForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    const fileInput = profileForm.profile_picture;
+    const file = fileInput.files[0];
+
+    if (!file) {
+      alert('Please select a file.');
+      return;
+    }
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      alert('Please select a valid image file.');
+      return;
+    }
+
+    // Validate file size (e.g., max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('File size must be less than 5MB.');
+      return;
+    }
+
+    // Here you would typically send the data to the server
+    alert('Profile picture change functionality would be implemented here.');
+    profileModal.classList.add('hidden');
+    profileForm.reset();
+  });
 });
-</script>
