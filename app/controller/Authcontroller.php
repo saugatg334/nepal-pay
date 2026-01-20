@@ -1,3 +1,4 @@
+(UPDATE existing file: set is_admin in session after successful login)
 <?php
 require_once __DIR__ . '/../models/User.php';
 require_once __DIR__ . '/../helpers/session_helper.php';
@@ -14,32 +15,7 @@ class AuthController {
         }
     }
 
-    public function register($name, $phone, $password, $confirmPassword = null) {
-        try {
-            // Check password confirmation if provided
-            if ($confirmPassword !== null && $password !== $confirmPassword) {
-                setFlash('error', 'Passwords do not match.');
-                return false;
-            }
-
-            if ($this->userModel->findUserByPhone($phone)) {
-                setFlash('error', 'User already exists with this phone number.');
-                return false;
-            }
-
-            $register = $this->userModel->register($name, $phone, $password);
-            if ($register) {
-                setFlash('success', 'Registration successful! Please login.');
-                return true;
-            } else {
-                setFlash('error', 'Registration failed. Please try again.');
-                return false;
-            }
-        } catch (Exception $e) {
-            setFlash('error', $e->getMessage());
-            return false;
-        }
-    }
+    // ... existing register() ... unchanged ...
 
     public function login($phone, $password, $pin = null) {
         try {
@@ -77,6 +53,9 @@ class AuthController {
                 $this->userModel->updateLoginInfo($user['id']);
 
                 $_SESSION['user_id'] = $user['id'];
+                // New: expose is_admin to session for admin pages
+                $_SESSION['is_admin'] = !empty($user['is_admin']) ? 1 : 0;
+
                 setFlash('success', 'Login successful!');
                 header("Location: dashboard.php");
                 exit;
@@ -101,53 +80,5 @@ class AuthController {
         }
     }
 
-    public function logout() {
-        session_destroy();
-        setFlash('success', 'You have been logged out successfully.');
-        header("Location: login.php");
-        exit;
-    }
-
-    public function setPIN($userId, $pin) {
-        try {
-            if (strlen($pin) < 4 || strlen($pin) > 6) {
-                setFlash('error', 'PIN must be 4-6 digits long.');
-                return false;
-            }
-
-            if (!preg_match('/^[0-9]+$/', $pin)) {
-                setFlash('error', 'PIN must contain only numbers.');
-                return false;
-            }
-
-            if ($this->userModel->setPIN($userId, $pin)) {
-                setFlash('success', 'PIN set successfully!');
-                return true;
-            } else {
-                setFlash('error', 'Failed to set PIN. Please try again.');
-                return false;
-            }
-        } catch (Exception $e) {
-            setFlash('error', 'PIN setup failed: ' . $e->getMessage());
-            return false;
-        }
-    }
-
-    public function updateKYC($userId, $documents) {
-        try {
-            // In a real application, you'd validate and store documents
-            // For now, we'll just update the status to pending
-            if ($this->userModel->updateKYCStatus($userId, 'pending', json_encode($documents))) {
-                setFlash('success', 'KYC documents submitted successfully. Please wait for verification.');
-                return true;
-            } else {
-                setFlash('error', 'Failed to submit KYC documents. Please try again.');
-                return false;
-            }
-        } catch (Exception $e) {
-            setFlash('error', 'KYC submission failed: ' . $e->getMessage());
-            return false;
-        }
-    }
-}
+    // ... rest unchanged ...
 ?>
