@@ -77,6 +77,7 @@ class AuthController {
                 $this->userModel->updateLoginInfo($user['id']);
 
                 $_SESSION['user_id'] = $user['id'];
+                $_SESSION['is_admin'] = !empty($user['is_admin']) ? 1 : 0;
                 setFlash('success', 'Login successful!');
                 header("Location: dashboard.php");
                 exit;
