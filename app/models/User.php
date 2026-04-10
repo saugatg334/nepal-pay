@@ -297,6 +297,7 @@ class User {
             throw new Exception("Failed login reset failed: " . $e->getMessage());
         }
     }
+=======
     public function updateKycDocuments($id, $kyc_documents) {
         try {
             $query = "UPDATE " . $this->table_name . " SET kyc_documents = :kyc_documents WHERE id = :id";
@@ -320,5 +321,272 @@ class User {
             throw new Exception("Profile picture update failed: " . $e->getMessage());
         }
     }
+
+    // Update total sent amount
+    public function updateTotalSent($id, $amount) {
+        try {
+            $query = "UPDATE " . $this->table_name . " SET total_sent = total_sent + :amount WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':amount', $amount);
+            $stmt->bindParam(':id', $id);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Total sent update failed: " . $e->getMessage());
+        }
+    }
+
+    // Update total received amount
+    public function updateTotalReceived($id, $amount) {
+        try {
+            $query = "UPDATE " . $this->table_name . " SET total_received = total_received + :amount WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':amount', $amount);
+            $stmt->bindParam(':id', $id);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Total received update failed: " . $e->getMessage());
+        }
+    }
+
+    // Freeze wallet
+    public function freezeWallet($id) {
+        try {
+            $query = "UPDATE " . $this->table_name . " SET wallet_frozen = 1 WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Wallet freeze failed: " . $e->getMessage());
+        }
+    }
+
+    // Unfreeze wallet
+    public function unfreezeWallet($id) {
+        try {
+            $query = "UPDATE " . $this->table_name . " SET wallet_frozen = 0 WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Wallet unfreeze failed: " . $e->getMessage());
+        }
+    }
+
+    // Increment PIN attempts
+    public function incrementPinAttempts($id) {
+        try {
+            $query = "UPDATE " . $this->table_name . " SET pin_attempts = pin_attempts + 1 WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("PIN attempts increment failed: " . $e->getMessage());
+        }
+    }
+
+    // Lock PIN
+    public function lockPin($id) {
+        try {
+            $lockTime = date('Y-m-d H:i:s', strtotime('+30 minutes'));
+            $query = "UPDATE " . $this->table_name . " SET pin_locked_until = :lock_time WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':lock_time', $lockTime);
+            $stmt->bindParam(':id', $id);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("PIN lock failed: " . $e->getMessage());
+        }
+    }
+
+    // Reset PIN attempts
+    public function resetPinAttempts($id) {
+        try {
+            $query = "UPDATE " . $this->table_name . " SET pin_attempts = 0, pin_locked_until = NULL WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("PIN attempts reset failed: " . $e->getMessage());
+        }
+    }
+
+    // Find user by email
+    public function findUserByEmail($email) {
+        try {
+            $query = "SELECT * FROM " . $this->table_name . " WHERE email = :email";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':email', $email);
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                return $stmt->fetch(PDO::FETCH_ASSOC);
+            }
+            return false;
+        } catch (PDOException $e) {
+            throw new Exception("Database query failed: " . $e->getMessage());
+        }
+    }
+=======
+    // Update total sent amount
+    public function updateTotalSent($id, $amount) {
+        try {
+            $query = "UPDATE " . $this->table_name . " SET total_sent = total_sent + :amount WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':amount', $amount);
+            $stmt->bindParam(':id', $id);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Total sent update failed: " . $e->getMessage());
+        }
+    }
+
+    // Update total received amount
+    public function updateTotalReceived($id, $amount) {
+        try {
+            $query = "UPDATE " . $this->table_name . " SET total_received = total_received + :amount WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':amount', $amount);
+            $stmt->bindParam(':id', $id);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Total received update failed: " . $e->getMessage());
+        }
+    }
+
+    // Freeze wallet
+    public function freezeWallet($id) {
+        try {
+            $query = "UPDATE " . $this->table_name . " SET wallet_frozen = 1 WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Wallet freeze failed: " . $e->getMessage());
+        }
+    }
+
+    // Unfreeze wallet
+    public function unfreezeWallet($id) {
+        try {
+            $query = "UPDATE " . $this->table_name . " SET wallet_frozen = 0 WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Wallet unfreeze failed: " . $e->getMessage());
+        }
+    }
+
+    // Increment PIN attempts
+    public function incrementPinAttempts($id) {
+        try {
+            $query = "UPDATE " . $this->table_name . " SET pin_attempts = pin_attempts + 1 WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("PIN attempts increment failed: " . $e->getMessage());
+        }
+    }
+
+    // Lock PIN
+    public function lockPin($id) {
+        try {
+            $lockTime = date('Y-m-d H:i:s', strtotime('+30 minutes'));
+            $query = "UPDATE " . $this->table_name . " SET pin_locked_until = :lock_time WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':lock_time', $lockTime);
+            $stmt->bindParam(':id', $id);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("PIN lock failed: " . $e->getMessage());
+        }
+    }
+
+    // Reset PIN attempts
+    public function resetPinAttempts($id) {
+        try {
+            $query = "UPDATE " . $this->table_name . " SET pin_attempts = 0, pin_locked_until = NULL WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("PIN attempts reset failed: " . $e->getMessage());
+        }
+    }
+
+    // Find user by email
+    public function findUserByEmail($email) {
+        try {
+            $query = "SELECT * FROM " . $this->table_name . " WHERE email = :email";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':email', $email);
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                return $stmt->fetch(PDO::FETCH_ASSOC);
+            }
+            return false;
+        } catch (PDOException $e) {
+            throw new Exception("Database query failed: " . $e->getMessage());
+        }
+    }
+
+    // Get user KYC level
+    public function getKycLevel($id) {
+        try {
+            $query = "SELECT kyc_level FROM " . $this->table_name . " WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                return $result['kyc_level'];
+            }
+            return 0;
+        } catch (PDOException $e) {
+            throw new Exception("KYC level retrieval failed: " . $e->getMessage());
+        }
+    }
+
+    // Update KYC level
+    public function updateKycLevel($id, $level) {
+        try {
+            $query = "UPDATE " . $this->table_name . " SET kyc_level = :level WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':level', $level);
+            $stmt->bindParam(':id', $id);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("KYC level update failed: " . $e->getMessage());
+        }
+    }
+
+    // Update full name
+    public function updateFullName($id, $full_name) {
+        try {
+            $query = "UPDATE " . $this->table_name . " SET full_name = :full_name WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':full_name', $full_name);
+            $stmt->bindParam(':id', $id);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Full name update failed: " . $e->getMessage());
+        }
+    }
+
+    // Update profile picture
+    public function updateProfilePic($id, $profile_pic) {
+        try {
+            $query = "UPDATE " . $this->table_name . " SET profile_pic = :profile_pic WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Profile picture update failed: " . $e->getMessage());
+        }
+    }
 }
 ?>
+
