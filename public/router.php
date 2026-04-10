@@ -7,8 +7,15 @@
 require_once __DIR__ . '/../app/helpers/session_helper.php';
 
 // Get request path
-$request_uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$path = trim(preg_replace('#^/wallet/public/?#', '', $request_uri), '/');
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+$base = dirname($_SERVER['SCRIPT_NAME']);
+$path = str_replace($base, '', $uri);
+$path = trim($path, '/');
+if ($path === '') {
+    $path = '';
+}
+
 
 $query = $_GET ?? [];
 
