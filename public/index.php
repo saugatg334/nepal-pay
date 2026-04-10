@@ -1,8 +1,7 @@
 <?php
-require_once __DIR__ . '/../app/config/database.php';
-require_once __DIR__ . '/../app/helpers/session_helper.php';
+// Nepal Pay Wallet - Single Secure Entry Point
 
-// Default route
-header("Location: login.php");
-exit;
-?>
+// Security headers
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: DENY');
+header('X-XSS-Protection

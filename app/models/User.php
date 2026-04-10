@@ -287,9 +287,7 @@ class User {
         }
     }
 
-    public function resetFailedLoginAttempts($phone) {
-        try {
-            $query = "UPDATE " . $this->table_name . " SET failed_login_attempts = 0, account_locked_until = NULL WHERE phone = :phone";
+
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':phone', $phone);
             return $stmt->execute();
