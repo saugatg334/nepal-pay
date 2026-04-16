@@ -1,13 +1,14 @@
 <?php
 require_once __DIR__ . '/../app/helpers/session_helper.php';
-require_once __DIR__ . '/../app/controller/BillController.php';
-require_once __DIR__ . '/../app/controller/WalletController.php';
+require_once __DIR__ . '/../app/controllers/WalletController.php';
+// BillController removed - use mock billers
+
 
 // Mock user id for demo – replace with real session user id
 $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 1;
 
-$billCtrl = new BillController();
 $walletCtrl = new WalletController();
+
 
 // Mock billers list — in a real app this would come from DB
 $billers = [
@@ -27,7 +28,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Location: pay.php'); exit;
   }
 
-  $result = $billCtrl->payBill($user_id, $biller_id, $amount, $method, $reference);
+  // Mock bill payment - in production use wallet transfer to biller account
+  setFlash('success', 'Bill payment successful (mock)');
+  header('Location: pay.php');
+  exit;
+
   // If result is a txn id (string), redirect to receipt page
   if ($result && is_string($result)) {
     header('Location: receipt.php?txn=' . urlencode($result));

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NepalPay Wallet Test Console</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #00d9ff;
+            font-size: 1.8rem;
+        }
+        .panel {
+            background: #16213e;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #0f3460;
+        }
+        .panel h2 {
+            color: #e94560;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #0f3460;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            background: #0f3460;
+            border: 1px solid #0f3460;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1rem;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #00d9ff;
+        }
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        .form-row .form-group {
+            flex: 1;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .btn-credit { background: #00d9ff; color: #1a1a2e; }
+        .btn-debit { background: #e94560; color: #fff; }
+        .btn-transfer { background: #f39c12; color: #1a1a2e; }
+        .btn-generate { background: #6c5ce7; color: #fff; }
+        .btn-rapid { background: #00cec9; color: #1a1a2e; }
+        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn:active { transform: translateY(0); }
+        .response-box {
+            background: #0a0a1a;
+            border-radius: 5px;
+            padding: 15px;
+            min-height: 150px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .response-success { color: #00d9ff; }
+        .response-failed { color: #e94560; }
+        .response-duplicate { color: #f39c12; }
+        .log-entry {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border-left: 3px solid;
+        }
+        .log-entry.success { border-color: #00d9ff; background: rgba(0, 217, 255, 0.1); }
+        .log-entry.failed { border-color: #e94560; background: rgba(233, 69, 96, 0.1); }
+        .log-entry.duplicate { border-color: #f39c12; background: rgba(243, 156, 18, 0.1); }
+        .log-entry.error { border-color: #ff0000; background: rgba(255, 0, 0, 0.1); }
+        .balance-display {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .balance-card {
+            flex: 1;
+            background: #0f3460;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .balance-card .label { color: #aaa; font-size: 0.85rem; }
+        .balance-card .value { color: #00d9ff; font-size: 1.5rem; font-weight: bold; margin-top: 5px; }
+        .test-scenarios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .test-scenario {
+            background: #0f3460;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.2s;
+        }
+        .test-scenario:hover { background: #1a4a7a; }
+        .test-scenario .title { color: #fff; font-weight: bold; }
+        .test-scenario .desc { color: #aaa; font-size: 0.8rem; margin-top: 5px; }
+        .rapid-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .rapid-controls input {
+            width: 80px;
+            padding: 8px;
+            background: #0f3460;
+            border: 1px solid #0f3460;
+            border-radius: 5px;
+            color: #fff;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ NepalPay Wallet Test Console</h1>
+        
+        <div class="balance-display">
+            <div class="balance-card">
+                <div class="label">Source User</div>
+                <div class="value" id="balanceFrom">--</div>
+            </div>
+            <div class="balance-card">
+                <div class="label">Destination User</div>
+                <div class="value" id="balanceTo">--</div>
+            </div>
+        </div>
+        
+        <div class="panel">
+            <h2>📝 Transaction Details</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>From User ID</label>
+                    <input type="number" id="fromUserId" placeholder="1" value="4">
+                </div>
+                <div class="form-group">
+                    <label>To User ID</label>
+                    <input type="number" id="toUserId" placeholder="2" value="5">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Amount (NPR)</label>
+                    <input type="number" id="amount" placeholder="100" value="500">
+                </div>
+                <div class="form-group">
+                    <label>Reference ID</label>
+                    <input type="text" id="referenceId" placeholder="Auto-generated">
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel">
+            <h2>🎯 Actions</h2>
+            <div class="btn-group">
+                <button class="btn btn-credit" onclick="credit()">+ Credit</button>
+                <button class="btn btn-debit" onclick="debit()">- Debit</button>
+                <button class="btn btn-transfer" onclick="transfer()">⇄ Transfer</button>
+                <button class="btn btn-generate" onclick="generateRef()">Generate Ref</button>
+            </div>
+            
+            <h2>🧪 Test Scenarios</h2>
+            <div class="test-scenarios">
+                <div class="test-scenario" onclick="runRapidTest()">
+                    <div class="title">⚡ Rapid Test</div>
+                    <div class="desc">5 instant requests</div>
+                </div>
+                <div class="test-scenario" onclick="runDuplicateTest()">
+                    <div class="title">🔄 Duplicate Test</div>
+                    <div class="desc">Same reference twice</div>
+                </div>
+                <div class="test-scenario" onclick="runInsufficientTest()">
+                    <div class="title">💸 Insufficient</div>
+                    <div class="desc">Test balance failure</div>
+                </div>
+                <div class="test-scenario" onclick="refreshBalances()">
+                    <div class="title">🔄 Refresh</div>
+                    <div class="desc">Update balances</div>
+                </div>
+            </div>
+            
+            <div class="rapid-controls">
+                <label>Rapid Requests:</label>
+                <input type="number" id="rapidCount" value="5" min="1" max="20">
+                <button class="btn btn-rapid" onclick="runRapidCustom()">Run</button>
+            </div>
+        </div>
+        
+        <div class="panel">
+            <h2>📋 Response Log</h2>
+            <div class="response-box" id="responseBox">
+                <div style="color: #666;">// Responses will appear here...</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const API_URL = 'api/wallet.php';
+        let lastReferenceId = null;
+        
+        // Generate unique reference ID
+        function generateRef() {
+            const ref = 'REF_' + Date.now() + '_' + Math.random().toString(36).substr(2, 8);
+            document.getElementById('referenceId').value = ref;
+            lastReferenceId = ref;
+            log('Generated reference: ' + ref, 'info');
+            return ref;
+        }
+        
+        // Get form values
+        function getValues() {
+            return {
+                user_id: parseInt(document.getElementById('fromUserId').value) || 1,
+                to_user_id: parseInt(document.getElementById('toUserId').value) || 2,
+                amount: parseFloat(document.getElementById('amount').value) || 100,
+                reference_id: document.getElementById('referenceId').value || generateRef()
+            };
+        }
+        
+        // API request
+        async function apiRequest(action, data) {
+            const payload = JSON.stringify({
+                action: action,
+                ...data
+            });
+            
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: payload
+                });
+                
+                const result = await response.json();
+                return result;
+            } catch (error) {
+                return {
+                    status: 'failed',
+                    message: 'Network error: ' + error.message,
+                    data: {}
+                };
+            }
+        }
+        
+        // Credit operation
+        async function credit() {
+            const data = getValues();
+            log('Credit: ' + data.amount + ' to user ' + data.user_id, 'info');
+            
+            const result = await apiRequest('credit', data);
+            logResponse(result);
+            
+            if (result.status === 'success') {
+                refreshBalances();
+            }
+        }
+        
+        // Debit operation
+        async function debit() {
+            const data = getValues();
+            log('Debit: ' + data.amount + ' from user ' + data.user_id, 'info');
+            
+            const result = await apiRequest('debit', data);
+            logResponse(result);
+            
+            if (result.status === 'success') {
+                refreshBalances();
+            }
+        }
+        
+        // Transfer operation
+        async function transfer() {
+            const data = getValues();
+            log('Transfer: ' + data.amount + ' from ' + data.user_id + ' to ' + data.to_user_id, 'info');
+            
+            const result = await apiRequest('transfer', data);
+            logResponse(result);
+            
+            if (result.status === 'success') {
+                refreshBalances();
+            }
+        }
+        
+        // Run rapid test (race condition test)
+        async function runRapidTest() {
+            const count = parseInt(document.getElementById('rapidCount').value) || 5;
+            const data = getValues();
+            
+            log('⚡ Starting rapid test (' + count + ' requests)', 'info');
+            
+            const promises = [];
+            for (let i = 0; i < count; i++) {
+                const ref = 'RAPID_' + Date.now() + '_' + i;
+                promises.push(apiRequest('debit', {
+                    ...data,
+                    reference_id: ref
+                }));
+            }
+            
+            const results = await Promise.all(promises);
+            
+            let success = 0, failed = 0, duplicate = 0;
+            results.forEach(r => {
+                if (r.status === 'success') success++;
+                else if (r.status === 'duplicate') duplicate++;
+                else failed++;
+            });
+            
+            log('Rapid test complete: ' + success + ' success, ' + duplicate + ' duplicate, ' + failed + ' failed', 
+                failed > 0 ? 'failed' : 'success');
+            refreshBalances();
+        }
+        
+        async function runRapidCustom() {
+            await runRapidTest();
+        }
+        
+        // Run duplicate test
+        async function runDuplicateTest() {
+            const ref = generateRef();
+            const data = getValues();
+            data.reference_id = ref;
+            
+            log('🔄 Duplicate test with ref: ' + ref, 'info');
+            
+            // First request
+            const result1 = await apiRequest('debit', data);
+            logResponse(result1);
+            
+            // Second request with same reference
+            const result2 = await apiRequest('debit', data);
+            logResponse(result2);
+            
+            if (result2.status === 'duplicate') {
+                log('✓ Duplicate correctly detected!', 'duplicate');
+            }
+            
+            refreshBalances();
+        }
+        
+        // Run insufficient balance test
+        async function runInsufficientTest() {
+            const data = getValues();
+            data.amount = 999999; // Huge amount
+            
+            log('💸 Testing with amount: ' + data.amount, 'info');
+            
+            const result = await apiRequest('debit', data);
+            logResponse(result);
+        }
+        
+        // Log response to console
+        function logResponse(result) {
+            const type = result.status || 'error';
+            log(JSON.stringify(result, null, 2), type);
+        }
+        
+        // Log message
+        function log(message, type = 'info') {
+            const box = document.getElementById('responseBox');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry ' + type;
+            entry.textContent = '[' + new Date().toLocaleTimeString() + '] ' + message;
+            box.insertBefore(entry, box.firstChild);
+        }
+        
+        // Get balance for user
+        async function getBalance(userId) {
+            try {
+                const response = await fetch('api/wallet.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'balance',
+                        user_id: userId
+                    })
+                });
+                const result = await response.json();
+                return result.data?.balance || '--';
+            } catch (e) {
+                return '--';
+            }
+        }
+        
+        // Refresh balance display
+        async function refreshBalances() {
+            const fromId = parseInt(document.getElementById('fromUserId').value);
+            const toId = parseInt(document.getElementById('toUserId').value);
+            
+            const [fromBalance, toBalance] = await Promise.all([
+                getBalance(fromId),
+                getBalance(toId)
+            ]);
+            
+            document.getElementById('balanceFrom').textContent = fromBalance + ' NPR';
+            document.getElementById('balanceTo').textContent = toBalance + ' NPR';
+        }
+        
+        // Initialize
+        generateRef();
+        refreshBalances();
+    </script>
+</body>
+</html>

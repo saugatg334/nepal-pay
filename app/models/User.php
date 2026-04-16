@@ -14,9 +14,9 @@ class User {
         }
     }
 
-    public function register($name, $phone, $password) {
+    public function register($full_name, $phone, $password) {
         // Validate input
-        if (empty($name) || empty($phone) || empty($password)) {
+        if (empty($full_name) || empty($phone) || empty($password)) {
             throw new Exception("All fields are required.");
         }
 
@@ -29,12 +29,12 @@ class User {
         }
 
         try {
-            $query = "INSERT INTO " . $this->table_name . " (name, phone, password) VALUES (:name, :phone, :password)";
+            $query = "INSERT INTO " . $this->table_name . " (full_name, phone, password) VALUES (:full_name, :phone, :password)";
             $stmt = $this->conn->prepare($query);
 
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-            $stmt->bindParam(':name', $name);
+            $stmt->bindParam(':full_name', $full_name);
             $stmt->bindParam(':phone', $phone);
             $stmt->bindParam(':password', $hashed_password);
 
@@ -79,19 +79,7 @@ class User {
         }
     }
 
-    public function updateWalletBalance($id, $amount) {
-        try {
-            $query = "UPDATE " . $this->table_name . " SET wallet_balance = wallet_balance + :amount WHERE id = :id";
-            $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(':amount', $amount);
-            $stmt->bindParam(':id', $id);
-            return $stmt->execute();
-        } catch (PDOException $e) {
-            throw new Exception("Balance update failed: " . $e->getMessage());
-        }
-    }
-
-    public function getWalletBalance($id) {
+public function getWalletBalance($id) {
         try {
             $query = "SELECT wallet_balance FROM " . $this->table_name . " WHERE id = :id";
             $stmt = $this->conn->prepare($query);
@@ -107,6 +95,8 @@ class User {
             throw new Exception("Balance retrieval failed: " . $e->getMessage());
         }
     }
+    // updateWalletBalance REMOVED - use WalletService ONLY
+
 
     public function recordTransaction($sender_id, $receiver_id, $amount, $type, $description = null, $txn_id = null, $provider = null, $customer_ref = null, $method = null, $provider_response = null, $status = 'completed') {
         try {
@@ -155,18 +145,40 @@ class User {
         }
     }
 
-    public function getTransactionHistory($user_id, $limit = 20) {
+    public function getTransactionHistory($user_id, $limit = 20, $offset = 0, $type = null, $status = null) {
         try {
-            $query = "SELECT t.*, u_sender.name as sender_name, u_receiver.name as receiver_name
+            $query = "SELECT t.*, u_sender.full_name as sender_name, u_receiver.full_name as receiver_name
                      FROM transactions t
                      LEFT JOIN users u_sender ON t.sender_id = u_sender.id
                      LEFT JOIN users u_receiver ON t.receiver_id = u_receiver.id
-                     WHERE t.sender_id = :user_id OR t.receiver_id = :user_id
-                     ORDER BY t.created_at DESC
-                     LIMIT :limit";
+                     WHERE (t.sender_id = :user_id OR t.receiver_id = :user_id)";
+            
+            $params = [':user_id' => $user_id, ':limit' => $limit, ':offset' => $offset];
+            
+            if ($type) {
+                $query .= " AND t.type = :type";
+                $params[':type'] = $type;
+            }
+            
+            if ($status) {
+                $query .= " AND t.status = :status";
+                $params[':status'] = $status;
+            }
+            
+            $query .= " ORDER BY t.created_at DESC LIMIT :limit OFFSET :offset";
+            
             $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(':user_id', $user_id);
-            $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+            $stmt->bindParam(':user_id', $params[':user_id']);
+            $stmt->bindParam(':limit', $params[':limit'], PDO::PARAM_INT);
+            $stmt->bindParam(':offset', $params[':offset'], PDO::PARAM_INT);
+            
+            if ($type) {
+                $stmt->bindParam(':type', $params[':type']);
+            }
+            if ($status) {
+                $stmt->bindParam(':status', $params[':status']);
+            }
+            
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -229,6 +241,47 @@ class User {
             return $stmt->execute();
         } catch (PDOException $e) {
             throw new Exception("KYC update failed: " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Get all users with pagination
+     */
+    public function getAllUsers($limit = 50, $offset = 0, $search = '') {
+        try {
+            $sql = "SELECT * FROM " . $this->table_name;
+            $params = [];
+            
+            if (!empty($search)) {
+                $sql .= " WHERE full_name LIKE ? OR phone LIKE ? OR email LIKE ?";
+                $searchTerm = "%{$search}%";
+                $params = [$searchTerm, $searchTerm, $searchTerm];
+            }
+            
+            $sql .= " ORDER BY created_at DESC LIMIT ? OFFSET ?";
+            $params[] = $limit;
+            $params[] = $offset;
+            
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute($params);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
+    /**
+     * Update user status (activate/deactivate)
+     */
+    public function updateUserStatus($id, $status) {
+        try {
+            $query = "UPDATE " . $this->table_name . " SET status = :status WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':status', $status);
+            $stmt->bindParam(':id', $id);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Status update failed: " . $e->getMessage());
         }
     }
 
@@ -472,3 +525,4 @@ class User {
     }
 }
 ?>
+

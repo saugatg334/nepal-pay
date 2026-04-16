@@ -1,0 +1,68 @@
+/* Login form visibility fix - override design-system.css issues */
+.glass, .glass * {
+  z-index: 10 !important;
+  position: relative !important;
+}
+
+/* Bill Card Styles */
+.bill-card {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.bill-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Provider Option Styles */
+.provider-option {
+  cursor: pointer;
+}
+
+.provider-option input {
+  display: none;
+}
+
+.provider-option.selected > div {
+  border-color: #3b82f6;
+  background: #eff6ff;
+}
+
+/* Amount Button Styles */
+.amount-btn {
+  font-weight: 500;
+  color: #374151;
+}
+
+.amount-btn:hover {
+  background: #f3f4f6;
+}
+
+form {
+  z-index: 20 !important;
+}
+
+input, button, label, textarea, select {
+  z-index: 30 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  position: relative !important;
+}
+
+/* Ensure form fields are visible */
+.space-y-6 > * {
+  opacity: 1 !important;
+}
+
+/* Fix any blur effects hiding content */
+.backdrop-blur-md, .backdrop-blur-sm {
+  backdrop-filter: blur(4px) !important;
+}
+
+/* Debug - remove after confirming fix */
+.login-debug {
+  border: 2px solid red !important;
+}
+

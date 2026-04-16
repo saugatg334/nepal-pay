@@ -1,22 +1,28 @@
 <?php
 class Database {
-    private $host = "localhost";
-    private $db_name = "nepal_pay_simple";
-    private $username = "root";
-    private $password = "";
     public $conn;
 
     public function connect() {
+        // Load .env
+        $dotenv = parse_ini_file(__DIR__ . '/../../.env', false, INI_SCANNER_RAW);
+        
+        $host = $dotenv['DB_HOST'] ?? 'localhost';
+        $dbname = $dotenv['DB_NAME'] ?? 'nepalpay';
+        $username = $dotenv['DB_USER'] ?? 'root';
+        $password = $dotenv['DB_PASS'] ?? '';
+        
         $this->conn = null;
         try {
-            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name,
-                                   $this->username, $this->password);
+            $this->conn = new PDO("mysql:host=" . $host . ";dbname=" . $dbname, $username, $password);
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->conn->exec("set names utf8");
+            return $this->conn;
         } catch(PDOException $e) {
-            echo "Database connection failed: " . $e->getMessage();
+            error_log("DB Connection failed: " . $e->getMessage());
+            throw $e;
         }
-        return $this->conn;
     }
+
 }
 ?>
 

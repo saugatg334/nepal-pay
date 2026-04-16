@@ -390,6 +390,105 @@ body {
 }
 
 /* ============================================
+   USER PANEL (LEFT SIDEBAR)
+   ============================================ */
+.user-panel {
+  display: flex;
+  min-height: 100vh;
+}
+
+.user-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--np-sidebar-width);
+  background: var(--np-gradient-sidebar);
+  padding: 1.5rem;
+  overflow-y: auto;
+  z-index: 1001;
+  transition: transform 0.3s ease;
+}
+
+.user-topbar {
+  position: fixed;
+  top: 0;
+  left: var(--np-sidebar-width);
+  right: 0;
+  height: var(--np-navbar-height);
+  background: var(--np-white);
+  box-shadow: var(--np-shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  z-index: 999;
+}
+
+.user-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-topbar-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--np-gray-800);
+}
+
+.user-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sidebar-toggle {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: var(--np-gray-100);
+  border-radius: var(--np-radius-md);
+  cursor: pointer;
+  color: var(--np-gray-600);
+}
+
+.sidebar-toggle:hover {
+  background: var(--np-gray-200);
+}
+
+.user-content {
+  margin-left: var(--np-sidebar-width);
+  padding: 1.5rem;
+  padding-top: calc(var(--np-navbar-height) + 1.5rem);
+  min-height: 100vh;
+  background: var(--np-gray-50);
+  flex: 1;
+}
+
+@media (max-width: 1024px) {
+  .user-sidebar {
+    transform: translateX(-100%);
+  }
+  
+  .user-sidebar.open {
+    transform: translateX(0);
+  }
+  
+  .user-content,
+  .user-topbar {
+    margin-left: 0;
+  }
+  
+  .sidebar-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* ============================================
    CARD STYLES
    ============================================ */
 .card {
