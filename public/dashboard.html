@@ -1,0 +1,2228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - NepalPay</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #06b6d4;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --sidebar-width: 260px;
+        }
+
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            background: #f8fafc;
+        }
+
+        body {
+            display: flex;
+        }
+
+        /* ==================== SIDEBAR ==================== */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: white;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 20px 0;
+        }
+
+        .sidebar-menu li {
+            padding: 0;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: #64748b;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .sidebar-menu a:hover {
+            background: #f0f4f8;
+            color: var(--primary);
+            padding-left: 25px;
+        }
+
+        .sidebar-menu a.active {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            color: var(--primary);
+            border-right: 3px solid var(--primary);
+        }
+
+        .sidebar-menu a i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 20px;
+            border-top: 1px solid #e2e8f0;
+            background: white;
+        }
+
+        .sidebar-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .sidebar-user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+        }
+
+        .sidebar-user-info {
+            flex: 1;
+        }
+
+        .sidebar-user-info p {
+            margin: 0;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .sidebar-user-info span {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        .btn-logout {
+            width: 100%;
+            padding: 10px;
+            background: #fee2e2;
+            color: var(--danger);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-logout:hover {
+            background: #fecaca;
+        }
+
+        /* ==================== MAIN CONTENT ==================== */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* ==================== TOP NAV ==================== */
+        .topnav {
+            background: white;
+            padding: 15px 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 500;
+        }
+
+        .topnav-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f0f4f8;
+            padding: 10px 15px;
+            border-radius: 10px;
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .search-box input {
+            border: none;
+            background: transparent;
+            outline: none;
+            flex: 1;
+            font-size: 13px;
+        }
+
+        .search-box i {
+            color: #94a3b8;
+        }
+
+        .topnav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .topnav-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f0f4f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .topnav-icon:hover {
+            background: #e2e8f0;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--danger);
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .profile-dropdown {
+            position: relative;
+        }
+
+        /* ==================== CONTENT AREA ==================== */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 30px;
+        }
+
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ==================== PAGE HEADER ==================== */
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        /* ==================== CARDS ==================== */
+        .card-balance {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: none;
+        }
+
+        .card-balance::before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            top: -50px;
+            right: -50px;
+        }
+
+        .card-balance::after {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            bottom: -30px;
+            left: -30px;
+        }
+
+        .card-balance-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-label {
+            font-size: 13px;
+            opacity: 0.8;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .card-amount {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .card-footer-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .stat-icon.income {
+            background: #d1fae5;
+            color: var(--success);
+        }
+
+        .stat-icon.expense {
+            background: #fee2e2;
+            color: var(--danger);
+        }
+
+        .stat-icon.reward {
+            background: #fef3c7;
+            color: var(--warning);
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .stat-change {
+            font-size: 12px;
+            color: var(--success);
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        /* ==================== QUICK ACTIONS ==================== */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: #1e293b;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+
+        .action-btn-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea15, #764ba215);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--primary);
+        }
+
+        .action-btn-label {
+            font-size: 13px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* ==================== FORMS ==================== */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+            font-size: 14px;
+            display: block;
+        }
+
+        .form-control {
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 12px 15px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            outline: none;
+        }
+
+        .form-control::placeholder {
+            color: #cbd5e1;
+        }
+
+        .btn-primary-custom {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary-custom {
+            padding: 12px 30px;
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .btn-secondary-custom:hover {
+            background: #f0f4f8;
+        }
+
+        /* ==================== TABLES ==================== */
+        .table-responsive-custom {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+        .table thead {
+            background: #f8fafc;
+        }
+
+        .table thead th {
+            padding: 15px;
+            font-weight: 600;
+            color: #64748b;
+            border: none;
+            font-size: 13px;
+        }
+
+        .table tbody td {
+            padding: 15px;
+            border-color: #e2e8f0;
+            font-size: 14px;
+        }
+
+        .table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .transaction-type {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .transaction-send {
+            background: #fee2e2;
+            color: var(--danger);
+        }
+
+        .transaction-receive {
+            background: #d1fae5;
+            color: var(--success);
+        }
+
+        .transaction-bill {
+            background: #fef3c7;
+            color: var(--warning);
+        }
+
+        .transaction-add {
+            background: #dbeafe;
+            color: var(--primary);
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: var(--success);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-pending {
+            background: #fef3c7;
+            color: var(--warning);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-failed {
+            background: #fee2e2;
+            color: var(--danger);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* ==================== MODALS ==================== */
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            border-bottom: 1px solid #e2e8f0;
+            background: white;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .modal-title {
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .btn-close {
+            filter: invert(0);
+        }
+
+        /* ==================== BILL PAYMENT PAGE ==================== */
+        .bill-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .bill-category {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .bill-category:hover,
+        .bill-category.active {
+            border-color: var(--primary);
+            background: #f0f4f8;
+        }
+
+        .bill-category-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .bill-category-name {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 14px;
+        }
+
+        .provider-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .provider-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .provider-card:hover,
+        .provider-card.active {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .provider-logo {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .provider-name {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 12px;
+        }
+
+        /* ==================== CHARTS ==================== */
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            position: relative;
+            height: 350px;
+        }
+
+        /* ==================== TOAST ==================== */
+        .toast-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 10px;
+            font-weight: 500;
+            z-index: 9999;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .toast-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 1200px) {
+            .content {
+                padding: 20px;
+            }
+
+            .page-header h1 {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 0;
+                transform: translateX(-100%);
+                transition: all 0.3s ease;
+            }
+
+            .sidebar.show {
+                width: var(--sidebar-width);
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .topnav {
+                padding: 15px 20px;
+            }
+
+            .search-box {
+                display: none;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .card-amount {
+                font-size: 28px;
+            }
+
+            .quick-actions {
+                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            }
+
+            .bill-categories {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .provider-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .page-header h1 {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            :root {
+                --sidebar-width: 0;
+            }
+
+            .topnav-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+            }
+
+            .card-amount {
+                font-size: 24px;
+            }
+
+            .quick-actions {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .bill-categories {
+                grid-template-columns: repeat(1, 1fr);
+            }
+
+            .provider-grid {
+                grid-template-columns: repeat(1, 1fr);
+            }
+
+            .action-btn-label {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-wallet" style="font-size: 24px; color: var(--primary);"></i>
+            <span class="sidebar-logo">NepalPay</span>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li><a href="#" onclick="switchPage('dashboard')" class="sidebar-link active" data-page="dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="#" onclick="switchPage('send')" class="sidebar-link" data-page="send"><i class="fas fa-paper-plane"></i> Send Money</a></li>
+            <li><a href="#" onclick="switchPage('add')" class="sidebar-link" data-page="add"><i class="fas fa-plus-circle"></i> Add Money</a></li>
+            <li><a href="#" onclick="switchPage('withdraw')" class="sidebar-link" data-page="withdraw"><i class="fas fa-arrow-down"></i> Withdraw</a></li>
+            <li><a href="#" onclick="switchPage('bill')" class="sidebar-link" data-page="bill"><i class="fas fa-file-invoice-dollar"></i> Bill Payment</a></li>
+            <li><a href="#" onclick="switchPage('transactions')" class="sidebar-link" data-page="transactions"><i class="fas fa-history"></i> Transactions</a></li>
+            <li><a href="#" onclick="switchPage('cards')" class="sidebar-link" data-page="cards"><i class="fas fa-credit-card"></i> Cards</a></li>
+            <li><a href="#" onclick="switchPage('profile')" class="sidebar-link" data-page="profile"><i class="fas fa-user"></i> Profile</a></li>
+            <li><a href="#" onclick="switchPage('settings')" class="sidebar-link" data-page="settings"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <div class="sidebar-user">
+                <div class="sidebar-user-avatar">AJ</div>
+                <div class="sidebar-user-info">
+                    <p>Aman Joshi</p>
+                    <span>Gold Member</span>
+                </div>
+            </div>
+            <button class="btn-logout" onclick="handleLogout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <!-- TOP NAVBAR -->
+        <div class="topnav">
+            <div class="topnav-left">
+                <button class="topnav-icon" onclick="toggleSidebar()" style="display: none;" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search transactions...">
+                </div>
+            </div>
+            <div class="topnav-right">
+                <div class="topnav-icon" onclick="showToast('No new notifications')">
+                    <i class="fas fa-bell"></i>
+                    <div class="notification-badge">3</div>
+                </div>
+                <div class="topnav-icon profile-dropdown" onclick="toggleProfileMenu()">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTENT AREA -->
+        <div class="content">
+            <!-- ================== DASHBOARD PAGE ================== -->
+            <div id="dashboard" class="page-section active">
+                <div class="page-header">
+                    <h1>Dashboard</h1>
+                    <p>Welcome back, Aman! Here's your wallet overview.</p>
+                </div>
+
+                <!-- Wallet Balance -->
+                <div class="row mb-4">
+                    <div class="col-lg-8">
+                        <div class="card-balance">
+                            <div class="card-balance-content">
+                                <div class="card-label">Total Wallet Balance</div>
+                                <div class="card-amount">NPR <span>45,320</span></div>
+                                <div class="card-footer">
+                                    <div class="card-footer-item">
+                                        <i class="fas fa-arrow-up"></i> Income
+                                    </div>
+                                    <div class="card-footer-item">
+                                        <span>Last updated 2 mins ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div>
+                                    <div class="stat-label">KYC Status</div>
+                                    <div class="stat-value" style="color: var(--success);">
+                                        <i class="fas fa-check-circle"></i> Verified
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="font-size: 13px; color: #94a3b8; margin: 0;">Full access unlocked</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-4 mb-3">
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div>
+                                    <div class="stat-label">This Month Income</div>
+                                    <div class="stat-value">NPR 85,000</div>
+                                </div>
+                                <div class="stat-icon income">
+                                    <i class="fas fa-arrow-down"></i>
+                                </div>
+                            </div>
+                            <div class="stat-change">
+                                <i class="fas fa-arrow-up"></i> 12.5% vs last month
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div>
+                                    <div class="stat-label">This Month Expense</div>
+                                    <div class="stat-value">NPR 32,100</div>
+                                </div>
+                                <div class="stat-icon expense">
+                                    <i class="fas fa-arrow-up"></i>
+                                </div>
+                            </div>
+                            <div class="stat-change" style="color: var(--danger);">
+                                <i class="fas fa-arrow-up"></i> 5.3% vs last month
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div>
+                                    <div class="stat-label">Rewards Points</div>
+                                    <div class="stat-value">2,450</div>
+                                </div>
+                                <div class="stat-icon reward">
+                                    <i class="fas fa-gift"></i>
+                                </div>
+                            </div>
+                            <div class="stat-change" style="color: var(--warning);">
+                                +245 pts this month
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="mb-4">
+                    <h5 style="font-weight: 700; margin-bottom: 20px;">Quick Actions</h5>
+                    <div class="quick-actions">
+                        <button class="action-btn" onclick="switchPage('send')">
+                            <div class="action-btn-icon">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                            <span class="action-btn-label">Send Money</span>
+                        </button>
+                        <button class="action-btn" onclick="switchPage('add')">
+                            <div class="action-btn-icon">
+                                <i class="fas fa-plus"></i>
+                            </div>
+                            <span class="action-btn-label">Add Money</span>
+                        </button>
+                        <button class="action-btn" onclick="switchPage('bill')">
+                            <div class="action-btn-icon">
+                                <i class="fas fa-receipt"></i>
+                            </div>
+                            <span class="action-btn-label">Pay Bills</span>
+                        </button>
+                        <button class="action-btn" onclick="switchPage('withdraw')">
+                            <div class="action-btn-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <span class="action-btn-label">Withdraw</span>
+                        </button>
+                        <button class="action-btn" onclick="showToast('QR scanner opening...')">
+                            <div class="action-btn-icon">
+                                <i class="fas fa-qrcode"></i>
+                            </div>
+                            <span class="action-btn-label">Scan QR</span>
+                        </button>
+                        <button class="action-btn" onclick="showToast('Requesting money...')">
+                            <div class="action-btn-icon">
+                                <i class="fas fa-hand-holding-usd"></i>
+                            </div>
+                            <span class="action-btn-label">Request Money</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="row mb-4">
+                    <div class="col-lg-8">
+                        <div class="chart-container">
+                            <h5 style="margin-bottom: 20px; font-weight: 700;">Monthly Transactions</h5>
+                            <canvas id="transactionChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="chart-container">
+                            <h5 style="margin-bottom: 20px; font-weight: 700;">Expense Breakdown</h5>
+                            <canvas id="expenseChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Transactions -->
+                <div>
+                    <h5 style="font-weight: 700; margin-bottom: 20px;">Recent Transactions</h5>
+                    <div class="table-responsive-custom">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Transaction</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="transaction-type">
+                                            <div class="transaction-icon transaction-send">
+                                                <i class="fas fa-arrow-up"></i>
+                                            </div>
+                                            <div>
+                                                <strong>Sent to Rajesh</strong>
+                                                <br><small style="color: #94a3b8;">Money Transfer</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Apr 28, 2024</td>
+                                    <td>-NPR 5,000</td>
+                                    <td><span class="badge-success">Completed</span></td>
+                                    <td><a href="#" style="color: var(--primary); text-decoration: none;">View</a></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="transaction-type">
+                                            <div class="transaction-icon transaction-receive">
+                                                <i class="fas fa-arrow-down"></i>
+                                            </div>
+                                            <div>
+                                                <strong>Received from Priya</strong>
+                                                <br><small style="color: #94a3b8;">Money Transfer</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Apr 27, 2024</td>
+                                    <td>+NPR 10,000</td>
+                                    <td><span class="badge-success">Completed</span></td>
+                                    <td><a href="#" style="color: var(--primary); text-decoration: none;">View</a></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="transaction-type">
+                                            <div class="transaction-icon transaction-bill">
+                                                <i class="fas fa-file-invoice"></i>
+                                            </div>
+                                            <div>
+                                                <strong>NEA Bill Payment</strong>
+                                                <br><small style="color: #94a3b8;">Electricity Bill</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Apr 26, 2024</td>
+                                    <td>-NPR 3,500</td>
+                                    <td><span class="badge-success">Completed</span></td>
+                                    <td><a href="#" style="color: var(--primary); text-decoration: none;">View</a></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="transaction-type">
+                                            <div class="transaction-icon transaction-add">
+                                                <i class="fas fa-plus"></i>
+                                            </div>
+                                            <div>
+                                                <strong>Added via Bank Transfer</strong>
+                                                <br><small style="color: #94a3b8;">Fund Addition</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Apr 25, 2024</td>
+                                    <td>+NPR 25,000</td>
+                                    <td><span class="badge-pending">Pending</span></td>
+                                    <td><a href="#" style="color: var(--primary); text-decoration: none;">View</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================== SEND MONEY PAGE ================== -->
+            <div id="send" class="page-section">
+                <div class="page-header">
+                    <h1>Send Money</h1>
+                    <p>Transfer funds to another wallet instantly</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="stat-card">
+                            <form onsubmit="handleSendMoney(event)">
+                                <div class="form-group">
+                                    <label class="form-label">Recipient</label>
+                                    <input type="text" class="form-control" placeholder="Phone number or username" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Recipient Name</label>
+                                    <input type="text" class="form-control" placeholder="Auto-filled when recipient found" disabled style="background: #f0f4f8;">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Amount (NPR)</label>
+                                    <input type="number" class="form-control" placeholder="Enter amount" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Note (Optional)</label>
+                                    <textarea class="form-control" placeholder="Add a note for recipient" rows="3"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Transaction PIN</label>
+                                    <input type="password" class="form-control" placeholder="Enter your 4-digit PIN" required>
+                                </div>
+
+                                <button type="submit" class="btn-primary-custom w-100">
+                                    <i class="fas fa-paper-plane"></i> Send Money
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="stat-card">
+                            <h5 style="font-weight: 700; margin-bottom: 20px;">Quick Recipients</h5>
+                            <div style="display: grid; gap: 10px;">
+                                <button style="display: flex; align-items: center; gap: 15px; padding: 15px; background: #f0f4f8; border: none; border-radius: 10px; cursor: pointer; transition: all 0.3s ease;" class="quick-recipient" onclick="fillRecipient(this)">
+                                    <div style="width: 45px; height: 45px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700;">RP</div>
+                                    <div style="text-align: left;">
+                                        <div style="font-weight: 600; color: #1e293b;">Rajesh Poudel</div>
+                                        <div style="font-size: 12px; color: #94a3b8;">9841234567</div>
+                                    </div>
+                                </button>
+
+                                <button style="display: flex; align-items: center; gap: 15px; padding: 15px; background: #f0f4f8; border: none; border-radius: 10px; cursor: pointer; transition: all 0.3s ease;" class="quick-recipient" onclick="fillRecipient(this)">
+                                    <div style="width: 45px; height: 45px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700;">PS</div>
+                                    <div style="text-align: left;">
+                                        <div style="font-weight: 600; color: #1e293b;">Priya Singh</div>
+                                        <div style="font-size: 12px; color: #94a3b8;">9845678901</div>
+                                    </div>
+                                </button>
+
+                                <button style="display: flex; align-items: center; gap: 15px; padding: 15px; background: #f0f4f8; border: none; border-radius: 10px; cursor: pointer; transition: all 0.3s ease;" class="quick-recipient" onclick="fillRecipient(this)">
+                                    <div style="width: 45px; height: 45px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700;">NK</div>
+                                    <div style="text-align: left;">
+                                        <div style="font-weight: 600; color: #1e293b;">Nikesh Kumar</div>
+                                        <div style="font-size: 12px; color: #94a3b8;">9812345678</div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================== ADD MONEY PAGE ================== -->
+            <div id="add" class="page-section">
+                <div class="page-header">
+                    <h1>Add Money</h1>
+                    <p>Deposit funds to your wallet using your preferred method</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="stat-card">
+                            <h5 style="font-weight: 700; margin-bottom: 20px;">Select Payment Method</h5>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; margin-bottom: 30px;">
+                                <button class="provider-card active" onclick="selectPaymentMethod(this, 'esewa')">
+                                    <div class="provider-logo">📱</div>
+                                    <div class="provider-name">eSewa</div>
+                                </button>
+                                <button class="provider-card" onclick="selectPaymentMethod(this, 'khalti')">
+                                    <div class="provider-logo">💳</div>
+                                    <div class="provider-name">Khalti</div>
+                                </button>
+                                <button class="provider-card" onclick="selectPaymentMethod(this, 'bank')">
+                                    <div class="provider-logo">🏦</div>
+                                    <div class="provider-name">Bank Transfer</div>
+                                </button>
+                                <button class="provider-card" onclick="selectPaymentMethod(this, 'card')">
+                                    <div class="provider-logo">💰</div>
+                                    <div class="provider-name">Debit Card</div>
+                                </button>
+                                <button class="provider-card" onclick="selectPaymentMethod(this, 'ime')">
+                                    <div class="provider-logo">💵</div>
+                                    <div class="provider-name">IME Agent</div>
+                                </button>
+                                <button class="provider-card" onclick="selectPaymentMethod(this, 'cash')">
+                                    <div class="provider-logo">🤑</div>
+                                    <div class="provider-name">Cash Counter</div>
+                                </button>
+                            </div>
+
+                            <form onsubmit="handleAddMoney(event)">
+                                <div class="form-group">
+                                    <label class="form-label">Amount (NPR)</label>
+                                    <input type="number" class="form-control" placeholder="Minimum: NPR 100, Maximum: NPR 500,000" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Description (Optional)</label>
+                                    <textarea class="form-control" placeholder="Add a note for your reference" rows="3"></textarea>
+                                </div>
+
+                                <button type="submit" class="btn-primary-custom w-100">
+                                    <i class="fas fa-arrow-down"></i> Proceed to Payment
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="stat-card">
+                            <h5 style="font-weight: 700; margin-bottom: 20px;">Payment Info</h5>
+                            <div style="background: #f0f4f8; padding: 15px; border-radius: 10px;">
+                                <p style="margin: 0; color: #64748b; font-size: 13px; margin-bottom: 8px;"><strong>Processing Fee:</strong></p>
+                                <p style="margin: 0; color: #1e293b; font-weight: 600; font-size: 16px;">Free for all methods</p>
+                            </div>
+                            <div style="background: #f0f4f8; padding: 15px; border-radius: 10px; margin-top: 15px;">
+                                <p style="margin: 0; color: #64748b; font-size: 13px; margin-bottom: 8px;"><strong>Instant Credit:</strong></p>
+                                <p style="margin: 0; color: #1e293b; font-weight: 600; font-size: 16px;">Within 5 minutes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================== WITHDRAW PAGE ================== -->
+            <div id="withdraw" class="page-section">
+                <div class="page-header">
+                    <h1>Withdraw Money</h1>
+                    <p>Withdraw funds from your wallet to your bank account</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="stat-card">
+                            <h5 style="font-weight: 700; margin-bottom: 20px;">Withdrawal Details</h5>
+                            <form onsubmit="handleWithdraw(event)">
+                                <div class="form-group">
+                                    <label class="form-label">Bank Account</label>
+                                    <select class="form-control" required>
+                                        <option value="">Select bank account</option>
+                                        <option value="nabil">NABIL Bank - 1234567890</option>
+                                        <option value="npl">Nepal Bank - 0987654321</option>
+                                        <option value="nia">NIA Bank - 1122334455</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Amount (NPR)</label>
+                                    <input type="number" class="form-control" placeholder="Minimum: NPR 500" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Transaction PIN</label>
+                                    <input type="password" class="form-control" placeholder="Enter your 4-digit PIN" required>
+                                </div>
+
+                                <button type="submit" class="btn-primary-custom w-100">
+                                    <i class="fas fa-arrow-up"></i> Withdraw
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="stat-card">
+                            <h5 style="font-weight: 700; margin-bottom: 20px;">Withdrawal Info</h5>
+                            <div style="background: #f0f4f8; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+                                <p style="margin: 0; color: #64748b; font-size: 13px; margin-bottom: 5px;"><strong>Fee:</strong></p>
+                                <p style="margin: 0; color: #1e293b; font-weight: 600;">Free for all banks</p>
+                            </div>
+                            <div style="background: #f0f4f8; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+                                <p style="margin: 0; color: #64748b; font-size: 13px; margin-bottom: 5px;"><strong>Processing Time:</strong></p>
+                                <p style="margin: 0; color: #1e293b; font-weight: 600;">1-2 business days</p>
+                            </div>
+                            <div style="background: #f0f4f8; padding: 15px; border-radius: 10px;">
+                                <p style="margin: 0; color: #64748b; font-size: 13px; margin-bottom: 5px;"><strong>Daily Limit:</strong></p>
+                                <p style="margin: 0; color: #1e293b; font-weight: 600;">NPR 500,000</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================== BILL PAYMENT PAGE ================== -->
+            <div id="bill" class="page-section">
+                <div class="page-header">
+                    <h1>Bill Payment</h1>
+                    <p>Pay bills and recharge instantly</p>
+                </div>
+
+                <div class="stat-card mb-4">
+                    <h5 style="font-weight: 700; margin-bottom: 20px;">Select Service Category</h5>
+                    <div class="bill-categories">
+                        <div class="bill-category active" onclick="selectBillCategory(this, 'electricity')">
+                            <div class="bill-category-icon">⚡</div>
+                            <div class="bill-category-name">Electricity</div>
+                        </div>
+                        <div class="bill-category" onclick="selectBillCategory(this, 'water')">
+                            <div class="bill-category-icon">💧</div>
+                            <div class="bill-category-name">Water</div>
+                        </div>
+                        <div class="bill-category" onclick="selectBillCategory(this, 'internet')">
+                            <div class="bill-category-icon">📡</div>
+                            <div class="bill-category-name">Internet</div>
+                        </div>
+                        <div class="bill-category" onclick="selectBillCategory(this, 'mobile')">
+                            <div class="bill-category-icon">📱</div>
+                            <div class="bill-category-name">Mobile Recharge</div>
+                        </div>
+                        <div class="bill-category" onclick="selectBillCategory(this, 'tv')">
+                            <div class="bill-category-icon">📺</div>
+                            <div class="bill-category-name">DTH/TV</div>
+                        </div>
+                        <div class="bill-category" onclick="selectBillCategory(this, 'education')">
+                            <div class="bill-category-icon">🎓</div>
+                            <div class="bill-category-name">Education</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="stat-card mb-4">
+                            <h5 style="font-weight: 700; margin-bottom: 20px;" id="providerTitle">Select Electricity Provider</h5>
+                            <div class="provider-grid" id="providerGrid">
+                                <button class="provider-card active" onclick="selectProvider(this, 'NEA')">
+                                    <div class="provider-logo">⚡</div>
+                                    <div class="provider-name">NEA</div>
+                                </button>
+                                <button class="provider-card" onclick="selectProvider(this, 'KUKL')">
+                                    <div class="provider-logo">💧</div>
+                                    <div class="provider-name">KUKL</div>
+                                </button>
+                                <button class="provider-card" onclick="selectProvider(this, 'NTC')">
+                                    <div class="provider-logo">📱</div>
+                                    <div class="provider-name">NTC</div>
+                                </button>
+                                <button class="provider-card" onclick="selectProvider(this, 'Ncell')">
+                                    <div class="provider-logo">📡</div>
+                                    <div class="provider-name">Ncell</div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <h5 style="font-weight: 700; margin-bottom: 20px;">Bill Details</h5>
+                            <form onsubmit="handleBillPayment(event)">
+                                <div class="form-group">
+                                    <label class="form-label">Customer ID / Username</label>
+                                    <input type="text" class="form-control" placeholder="Enter customer ID or username" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="button" class="btn-secondary-custom w-100" onclick="fetchBillDetails()">
+                                        <i class="fas fa-search"></i> Fetch Bill
+                                    </button>
+                                </div>
+
+                                <div class="form-group" id="billDetailsBox" style="display: none;">
+                                    <div style="background: #f0f4f8; padding: 15px; border-radius: 10px;">
+                                        <p style="margin: 0; color: #64748b; font-size: 12px; margin-bottom: 5px;">Bill Details</p>
+                                        <p style="margin: 0; color: #1e293b; font-weight: 600; margin-bottom: 10px;">Customer: <strong id="billCustomer">-</strong></p>
+                                        <p style="margin: 0; color: #1e293b; font-weight: 600; margin-bottom: 10px;">Due Amount: <strong id="billAmount">NPR -</strong></p>
+                                        <p style="margin: 0; color: #1e293b; font-weight: 600;">Due Date: <strong id="billDueDate">-</strong></p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Transaction PIN</label>
+                                    <input type="password" class="form-control" placeholder="Enter your 4-digit PIN" required>
+                                </div>
+
+                                <button type="submit" class="btn-primary-custom w-100">
+                                    <i class="fas fa-check"></i> Pay Bill
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="stat-card">
+                            <h5 style="font-weight: 700; margin-bottom: 20px;">Recent Bills</h5>
+                            <div style="display: grid; gap: 12px;">
+                                <div style="padding: 12px; background: #f0f4f8; border-radius: 8px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <p style="margin: 0; color: #1e293b; font-weight: 600; font-size: 13px;">NEA Electricity</p>
+                                            <p style="margin: 0; color: #94a3b8; font-size: 12px;">Paid on Apr 25, 2024</p>
+                                        </div>
+                                        <p style="margin: 0; color: #1e293b; font-weight: 600;">NPR 2,500</p>
+                                    </div>
+                                </div>
+                                <div style="padding: 12px; background: #f0f4f8; border-radius: 8px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <p style="margin: 0; color: #1e293b; font-weight: 600; font-size: 13px;">KUKL Water Bill</p>
+                                            <p style="margin: 0; color: #94a3b8; font-size: 12px;">Paid on Apr 20, 2024</p>
+                                        </div>
+                                        <p style="margin: 0; color: #1e293b; font-weight: 600;">NPR 1,200</p>
+                                    </div>
+                                </div>
+                                <div style="padding: 12px; background: #f0f4f8; border-radius: 8px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <p style="margin: 0; color: #1e293b; font-weight: 600; font-size: 13px;">NTC Mobile Recharge</p>
+                                            <p style="margin: 0; color: #94a3b8; font-size: 12px;">Paid on Apr 15, 2024</p>
+                                        </div>
+                                        <p style="margin: 0; color: #1e293b; font-weight: 600;">NPR 500</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================== TRANSACTIONS PAGE ================== -->
+            <div id="transactions" class="page-section">
+                <div class="page-header">
+                    <h1>Transaction History</h1>
+                    <p>View and manage all your transactions</p>
+                </div>
+
+                <div class="stat-card mb-4">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label">Date From</label>
+                            <input type="date" class="form-control">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label">Date To</label>
+                            <input type="date" class="form-control">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label">Type</label>
+                            <select class="form-control">
+                                <option>All Types</option>
+                                <option>Sent</option>
+                                <option>Received</option>
+                                <option>Bill Payment</option>
+                                <option>Top-up</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label">Status</label>
+                            <select class="form-control">
+                                <option>All Status</option>
+                                <option>Completed</option>
+                                <option>Pending</option>
+                                <option>Failed</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive-custom">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>TXN ID</th>
+                                <th>Transaction</th>
+                                <th>Date & Time</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code style="background: #f0f4f8; padding: 4px 8px; border-radius: 4px; font-size: 11px;">TXN001245</code></td>
+                                <td>
+                                    <div class="transaction-type">
+                                        <div class="transaction-icon transaction-send">
+                                            <i class="fas fa-arrow-up"></i>
+                                        </div>
+                                        <div>
+                                            <strong>Sent to Rajesh</strong>
+                                            <br><small style="color: #94a3b8;">Money Transfer</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Apr 28, 2024<br><small>10:45 AM</small></td>
+                                <td>NPR 5,000</td>
+                                <td><span class="badge-success">Completed</span></td>
+                                <td><a href="#" style="color: var(--primary); text-decoration: none; font-weight: 600;">Download</a></td>
+                            </tr>
+                            <tr>
+                                <td><code style="background: #f0f4f8; padding: 4px 8px; border-radius: 4px; font-size: 11px;">TXN001244</code></td>
+                                <td>
+                                    <div class="transaction-type">
+                                        <div class="transaction-icon transaction-bill">
+                                            <i class="fas fa-file-invoice"></i>
+                                        </div>
+                                        <div>
+                                            <strong>NEA Electricity Bill</strong>
+                                            <br><small style="color: #94a3b8;">SC: 2345678</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Apr 27, 2024<br><small>3:20 PM</small></td>
+                                <td>NPR 2,500</td>
+                                <td><span class="badge-success">Completed</span></td>
+                                <td><a href="#" style="color: var(--primary); text-decoration: none; font-weight: 600;">Download</a></td>
+                            </tr>
+                            <tr>
+                                <td><code style="background: #f0f4f8; padding: 4px 8px; border-radius: 4px; font-size: 11px;">TXN001243</code></td>
+                                <td>
+                                    <div class="transaction-type">
+                                        <div class="transaction-icon transaction-receive">
+                                            <i class="fas fa-arrow-down"></i>
+                                        </div>
+                                        <div>
+                                            <strong>Received from Priya</strong>
+                                            <br><small style="color: #94a3b8;">Money Transfer</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Apr 26, 2024<br><small>8:15 PM</small></td>
+                                <td>NPR 10,000</td>
+                                <td><span class="badge-success">Completed</span></td>
+                                <td><a href="#" style="color: var(--primary); text-decoration: none; font-weight: 600;">Download</a></td>
+                            </tr>
+                            <tr>
+                                <td><code style="background: #f0f4f8; padding: 4px 8px; border-radius: 4px; font-size: 11px;">TXN001242</code></td>
+                                <td>
+                                    <div class="transaction-type">
+                                        <div class="transaction-icon transaction-add">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                        <div>
+                                            <strong>Added via Bank Transfer</strong>
+                                            <br><small style="color: #94a3b8;">From NABIL Bank</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Apr 25, 2024<br><small>2:30 PM</small></td>
+                                <td>NPR 25,000</td>
+                                <td><span class="badge-pending">Pending</span></td>
+                                <td><a href="#" style="color: var(--primary); text-decoration: none; font-weight: 600;">Details</a></td>
+                            </tr>
+                            <tr>
+                                <td><code style="background: #f0f4f8; padding: 4px 8px; border-radius: 4px; font-size: 11px;">TXN001241</code></td>
+                                <td>
+                                    <div class="transaction-type">
+                                        <div class="transaction-icon transaction-send">
+                                            <i class="fas fa-arrow-up"></i>
+                                        </div>
+                                        <div>
+                                            <strong>Sent to Nikesh</strong>
+                                            <br><small style="color: #94a3b8;">Money Transfer</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Apr 24, 2024<br><small>5:45 PM</small></td>
+                                <td>NPR 3,500</td>
+                                <td><span class="badge-failed">Failed</span></td>
+                                <td><a href="#" style="color: var(--primary); text-decoration: none; font-weight: 600;">Retry</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ================== CARDS PAGE ================== -->
+            <div id="cards" class="page-section">
+                <div class="page-header">
+                    <h1>My Cards</h1>
+                    <p>Manage your payment cards and add new ones</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-8 mb-4">
+                        <h5 style="font-weight: 700; margin-bottom: 20px;">Active Cards</h5>
+                        <div style="display: grid; gap: 20px;">
+                            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 15px; padding: 30px; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);">
+                                <div style="position: absolute; width: 150px; height: 150px; background: rgba(255, 255, 255, 0.1); border-radius: 50%; top: -30px; right: -30px;"></div>
+                                <div style="position: relative; z-index: 1;">
+                                    <p style="margin: 0; opacity: 0.8; font-size: 12px; margin-bottom: 40px;">VISA DEBIT CARD</p>
+                                    <p style="margin: 0; font-size: 24px; letter-spacing: 2px; font-weight: 700; margin-bottom: 40px;">4532 •••• •••• 8901</p>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <div>
+                                            <p style="margin: 0; opacity: 0.8; font-size: 10px;">CARD HOLDER</p>
+                                            <p style="margin: 0; font-weight: 600;">AMAN JOSHI</p>
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <p style="margin: 0; opacity: 0.8; font-size: 10px;">EXPIRY</p>
+                                            <p style="margin: 0; font-weight: 600;">12/26</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); color: white; border-radius: 15px; padding: 30px; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3);">
+                                <div style="position: absolute; width: 150px; height: 150px; background: rgba(255, 255, 255, 0.1); border-radius: 50%; top: -30px; right: -30px;"></div>
+                                <div style="position: relative; z-index: 1;">
+                                    <p style="margin: 0; opacity: 0.8; font-size: 12px; margin-bottom: 40px;">MASTERCARD CREDIT</p>
+                                    <p style="margin: 0; font-size: 24px; letter-spacing: 2px; font-weight: 700; margin-bottom: 40px;">5234 •••• •••• 4567</p>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <div>
+                                            <p style="margin: 0; opacity: 0.8; font-size: 10px;">CARD HOLDER</p>
+                                            <p style="margin: 0; font-weight: 600;">AMAN JOSHI</p>
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <p style="margin: 0; opacity: 0.8; font-size: 10px;">EXPIRY</p>
+                                            <p style="margin: 0; font-weight: 600;">08/25</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="stat-card">
+                            <h5 style="font-weight: 700; margin-bottom: 20px;">Add New Card</h5>
+                            <form onsubmit="handleAddCard(event)">
+                                <div class="form-group">
+                                    <label class="form-label">Card Number</label>
+                                    <input type="text" class="form-control" placeholder="1234 5678 9012 3456" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Cardholder Name</label>
+                                    <input type="text" class="form-control" placeholder="JOHN DOE" required>
+                                </div>
+
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                    <div class="form-group">
+                                        <label class="form-label">Expiry Date</label>
+                                        <input type="text" class="form-control" placeholder="MM/YY" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">CVV</label>
+                                        <input type="text" class="form-control" placeholder="123" required>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn-primary-custom w-100">
+                                    <i class="fas fa-plus"></i> Add Card
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================== PROFILE PAGE ================== -->
+            <div id="profile" class="page-section">
+                <div class="page-header">
+                    <h1>My Profile</h1>
+                    <p>Manage your personal information</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4 mb-4">
+                        <div class="stat-card" style="text-align: center;">
+                            <div style="width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 40px; font-weight: 700;">
+                                AJ
+                            </div>
+                            <h5 style="margin-bottom: 5px; font-weight: 700;">Aman Joshi</h5>
+                            <p style="color: #94a3b8; font-size: 13px; margin-bottom: 20px;">Gold Member | Verified</p>
+                            <button class="btn-secondary-custom w-100" onclick="handleEditProfile()">
+                                <i class="fas fa-edit"></i> Edit Profile
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8">
+                        <div class="stat-card mb-4">
+                            <h5 style="font-weight: 700; margin-bottom: 20px;">Personal Information</h5>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                                <div>
+                                    <p style="color: #94a3b8; font-size: 12px; margin-bottom: 5px;">Full Name</p>
+                                    <p style="color: #1e293b; font-weight: 600;">Aman Joshi</p>
+                                </div>
+                                <div>
+                                    <p style="color: #94a3b8; font-size: 12px; margin-bottom: 5px;">Email</p>
+                                    <p style="color: #1e293b; font-weight: 600;">aman.joshi@example.com</p>
+                                </div>
+                                <div>
+                                    <p style="color: #94a3b8; font-size: 12px; margin-bottom: 5px;">Phone Number</p>
+                                    <p style="color: #1e293b; font-weight: 600;">+977 9841234567</p>
+                                </div>
+                                <div>
+                                    <p style="color: #94a3b8; font-size: 12px; margin-bottom: 5px;">Username</p>
+                                    <p style="color: #1e293b; font-weight: 600;">amanjoshi</p>
+                                </div>
+                                <div>
+                                    <p style="color: #94a3b8; font-size: 12px; margin-bottom: 5px;">Member Since</p>
+                                    <p style="color: #1e293b; font-weight: 600;">Jan 15, 2023</p>
+                                </div>
+                                <div>
+                                    <p style="color: #94a3b8; font-size: 12px; margin-bottom: 5px;">Account Status</p>
+                                    <p style="color: #1e293b; font-weight: 600;"><span style="color: var(--success);"><i class="fas fa-check-circle"></i> Active</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card mb-4">
+                            <h5 style="font-weight: 700; margin-bottom: 20px;">KYC & Verification</h5>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #d1fae5; border-radius: 10px; margin-bottom: 15px;">
+                                <div>
+                                    <p style="margin: 0; color: var(--success); font-weight: 600; margin-bottom: 5px;">Document Verification</p>
+                                    <p style="margin: 0; font-size: 13px; color: #059669;">Verified with Citizenship Certificate</p>
+                                </div>
+                                <i class="fas fa-check-circle" style="color: var(--success); font-size: 20px;"></i>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #d1fae5; border-radius: 10px;">
+                                <div>
+                                    <p style="margin: 0; color: var(--success); font-weight: 600; margin-bottom: 5px;">Bank Account Verification</p>
+                                    <p style="margin: 0; font-size: 13px; color: #059669;">Verified with NABIL Bank Account</p>
+                                </div>
+                                <i class="fas fa-check-circle" style="color: var(--success); font-size: 20px;"></i>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <h5 style="font-weight: 700; margin-bottom: 20px;">Contact Preferences</h5>
+                            <div class="form-check" style="margin-bottom: 15px;">
+                                <input class="form-check-input" type="checkbox" id="emailNotif" checked>
+                                <label class="form-check-label" for="emailNotif">
+                                    Receive notifications via Email
+                                </label>
+                            </div>
+                            <div class="form-check" style="margin-bottom: 15px;">
+                                <input class="form-check-input" type="checkbox" id="smsNotif" checked>
+                                <label class="form-check-label" for="smsNotif">
+                                    Receive notifications via SMS
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="pushNotif" checked>
+                                <label class="form-check-label" for="pushNotif">
+                                    Receive push notifications
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================== SETTINGS PAGE ================== -->
+            <div id="settings" class="page-section">
+                <div class="page-header">
+                    <h1>Settings</h1>
+                    <p>Manage your security and preferences</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 mb-4">
+                        <div class="stat-card mb-4">
+                            <h5 style="font-weight: 700; margin-bottom: 20px;">Security</h5>
+                            <button class="btn-secondary-custom w-100 mb-3" onclick="openChangePasswordModal()">
+                                <i class="fas fa-key"></i> Change Password
+                            </button>
+                            <button class="btn-secondary-custom w-100 mb-3" onclick="openChangePINModal()">
+                                <i class="fas fa-lock"></i> Change Transaction PIN
+                            </button>
+                            <button class="btn-secondary-custom w-100" onclick="openTwoFactorModal()">
+                                <i class="fas fa-shield-alt"></i> Two-Factor Authentication
+                            </button>
+                        </div>
+
+                        <div class="stat-card">
+                            <h5 style="font-weight: 700; margin-bottom: 20px;">Preferences</h5>
+                            <div style="margin-bottom: 20px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                    <label style="color: #1e293b; font-weight: 600;">Dark Mode</label>
+                                    <input type="checkbox" id="darkModeToggle" style="width: 40px; height: 24px; cursor: pointer;">
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                    <label style="color: #1e293b; font-weight: 600;">Email Notifications</label>
+                                    <input type="checkbox" checked style="width: 40px; height: 24px; cursor: pointer;">
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <label style="color: #1e293b; font-weight: 600;">Transaction Alerts</label>
+                                    <input type="checkbox" checked style="width: 40px; height: 24px; cursor: pointer;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 mb-4">
+                        <div class="stat-card mb-4">
+                            <h5 style="font-weight: 700; margin-bottom: 20px;">Device Management</h5>
+                            <div style="padding: 15px; background: #f0f4f8; border-radius: 10px; margin-bottom: 15px;">
+                                <p style="margin: 0; font-weight: 600; color: #1e293b; margin-bottom: 5px;">
+                                    <i class="fas fa-laptop"></i> Windows Desktop
+                                </p>
+                                <p style="margin: 0; font-size: 12px; color: #94a3b8;">Last active: 2 hours ago</p>
+                            </div>
+                            <div style="padding: 15px; background: #f0f4f8; border-radius: 10px; margin-bottom: 15px;">
+                                <p style="margin: 0; font-weight: 600; color: #1e293b; margin-bottom: 5px;">
+                                    <i class="fas fa-mobile-alt"></i> iPhone 12
+                                </p>
+                                <p style="margin: 0; font-size: 12px; color: #94a3b8;">Last active: 30 minutes ago</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <h5 style="font-weight: 700; margin-bottom: 20px;">Danger Zone</h5>
+                            <button class="btn-secondary-custom w-100 mb-3" onclick="handleFreezeAccount()" style="border-color: var(--warning); color: var(--warning);">
+                                <i class="fas fa-snowflake"></i> Freeze Account
+                            </button>
+                            <button class="btn-secondary-custom w-100" onclick="handleDeleteAccount()" style="border-color: var(--danger); color: var(--danger);">
+                                <i class="fas fa-trash"></i> Delete Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast-notification"></div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // ==================== PAGE NAVIGATION ====================
+        function switchPage(page) {
+            // Hide all pages
+            document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
+
+            // Show selected page
+            document.getElementById(page).classList.add('active');
+            document.querySelector(`[data-page="${page}"]`).classList.add('active');
+
+            // Close sidebar on mobile
+            if (window.innerWidth < 768) {
+                document.getElementById('sidebar').classList.remove('show');
+            }
+
+            // Initialize charts if on dashboard
+            if (page === 'dashboard') {
+                setTimeout(() => {
+                    initCharts();
+                }, 100);
+            }
+        }
+
+        // ==================== SIDEBAR ====================
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('show');
+        }
+
+        // Show/hide sidebar toggle on mobile
+        window.addEventListener('resize', () => {
+            const toggleBtn = document.getElementById('sidebarToggle');
+            if (window.innerWidth < 768) {
+                toggleBtn.style.display = 'flex';
+            } else {
+                toggleBtn.style.display = 'none';
+                document.getElementById('sidebar').classList.remove('show');
+            }
+        });
+
+        window.addEventListener('load', () => {
+            const toggleBtn = document.getElementById('sidebarToggle');
+            if (window.innerWidth < 768) {
+                toggleBtn.style.display = 'flex';
+            }
+        });
+
+        // ==================== CHARTS ====================
+        let transactionChart, expenseChart;
+
+        function initCharts() {
+            if (transactionChart) transactionChart.destroy();
+            if (expenseChart) expenseChart.destroy();
+
+            // Monthly Transactions Chart
+            const transactionCtx = document.getElementById('transactionChart');
+            if (transactionCtx) {
+                transactionChart = new Chart(transactionCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                        datasets: [{
+                            label: 'Transactions',
+                            data: [65, 78, 90, 105, 95, 120],
+                            borderColor: '#667eea',
+                            backgroundColor: 'rgba(102, 126, 234, 0.05)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 5,
+                            pointBackgroundColor: '#667eea',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                grid: {
+                                    color: '#e2e8f0'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Expense Breakdown Chart
+            const expenseCtx = document.getElementById('expenseChart');
+            if (expenseCtx) {
+                expenseChart = new Chart(expenseCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Bills', 'Shopping', 'Food', 'Transport'],
+                        datasets: [{
+                            data: [30, 25, 25, 20],
+                            backgroundColor: [
+                                '#667eea',
+                                '#764ba2',
+                                '#06b6d4',
+                                '#10b981'
+                            ],
+                            borderColor: '#fff',
+                            borderWidth: 3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    padding: 15,
+                                    font: {
+                                        size: 12
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // ==================== TOAST NOTIFICATIONS ====================
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast-notification show';
+            
+            if (type === 'success') toast.style.backgroundColor = '#10b981';
+            else if (type === 'error') toast.style.backgroundColor = '#ef4444';
+            else if (type === 'warning') toast.style.backgroundColor = '#f59e0b';
+            else toast.style.backgroundColor = '#667eea';
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // ==================== FORM HANDLERS ====================
+        function handleSendMoney(e) {
+            e.preventDefault();
+            showToast('✅ Money sent successfully!', 'success');
+        }
+
+        function handleAddMoney(e) {
+            e.preventDefault();
+            showToast('✅ Proceeding to payment gateway...', 'success');
+        }
+
+        function handleWithdraw(e) {
+            e.preventDefault();
+            showToast('✅ Withdrawal request submitted! Processing...', 'success');
+        }
+
+        function handleBillPayment(e) {
+            e.preventDefault();
+            showToast('✅ Bill payment successful!', 'success');
+        }
+
+        function handleAddCard(e) {
+            e.preventDefault();
+            showToast('✅ Card added successfully!', 'success');
+        }
+
+        function handleEditProfile() {
+            showToast('📝 Edit profile feature coming soon!');
+        }
+
+        function handleLogout() {
+            showToast('👋 Logging out...', 'success');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1000);
+        }
+
+        function handleFreezeAccount() {
+            showToast('❄️ Account freeze feature coming soon!');
+        }
+
+        function handleDeleteAccount() {
+            showToast('🚨 Account deletion coming soon!');
+        }
+
+        // ==================== BILL PAYMENT ====================
+        function selectBillCategory(el, category) {
+            document.querySelectorAll('.bill-category').forEach(e => e.classList.remove('active'));
+            el.classList.add('active');
+
+            const providers = {
+                electricity: [
+                    { name: 'NEA', icon: '⚡' }
+                ],
+                water: [
+                    { name: 'KUKL', icon: '💧' }
+                ],
+                internet: [
+                    { name: 'WorldLink', icon: '📡' },
+                    { name: 'Vianet', icon: '📡' },
+                    { name: 'Subisu', icon: '📡' }
+                ],
+                mobile: [
+                    { name: 'NTC', icon: '📱' },
+                    { name: 'Ncell', icon: '📱' }
+                ],
+                tv: [
+                    { name: 'Dish Home', icon: '📺' },
+                    { name: 'Gorkhaland', icon: '📺' }
+                ],
+                education: [
+                    { name: 'Schools', icon: '🎓' },
+                    { name: 'Universities', icon: '🎓' }
+                ]
+            };
+
+            const providerTitle = {
+                electricity: 'Select Electricity Provider',
+                water: 'Select Water Provider',
+                internet: 'Select Internet Provider',
+                mobile: 'Select Mobile Provider',
+                tv: 'Select TV Provider',
+                education: 'Select Institution'
+            };
+
+            const grid = document.getElementById('providerGrid');
+            grid.innerHTML = '';
+            document.getElementById('providerTitle').textContent = providerTitle[category];
+
+            providers[category].forEach(p => {
+                const btn = document.createElement('button');
+                btn.className = 'provider-card';
+                btn.innerHTML = `<div class="provider-logo">${p.icon}</div><div class="provider-name">${p.name}</div>`;
+                btn.onclick = () => selectProvider(btn, p.name);
+                grid.appendChild(btn);
+            });
+
+            grid.children[0].classList.add('active');
+        }
+
+        function selectProvider(el, provider) {
+            document.querySelectorAll('.provider-card').forEach(e => e.classList.remove('active'));
+            el.classList.add('active');
+            showToast(`✅ ${provider} selected`);
+        }
+
+        function selectPaymentMethod(el, method) {
+            document.querySelectorAll('.provider-card').forEach(e => e.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        function fetchBillDetails() {
+            document.getElementById('billDetailsBox').style.display = 'block';
+            showToast('✅ Bill details fetched successfully');
+        }
+
+        function fillRecipient(el) {
+            showToast('✅ Recipient selected');
+        }
+
+        function openChangePasswordModal() {
+            showToast('🔑 Change password feature coming soon!');
+        }
+
+        function openChangePINModal() {
+            showToast('🔐 Change PIN feature coming soon!');
+        }
+
+        function openTwoFactorModal() {
+            showToast('🔒 Two-factor authentication coming soon!');
+        }
+
+        // ==================== PROFILE DROPDOWN ====================
+        function toggleProfileMenu() {
+            showToast('👤 Profile menu coming soon!');
+        }
+
+        // Initialize on load
+        window.addEventListener('load', () => {
+            initCharts();
+        });
+    </script>
+</body>
+</html>

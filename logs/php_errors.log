@@ -1,0 +1,105 @@
+[27-Apr-2026 12:30:04 Asia/Kathmandu] View not found: D:\xampp\htdocs\wallet/app/views/auth/forgot_password.php
+[27-Apr-2026 13:03:32 Asia/Kathmandu] View not found: D:\xampp\htdocs\wallet/app/views/bill/pay.php
+[27-Apr-2026 13:19:20 Asia/Kathmandu] View not found: D:\xampp\htdocs\wallet/app/views/bill/pay.php
+[27-Apr-2026 13:19:20 Asia/Kathmandu] View not found: D:\xampp\htdocs\wallet/app/views/bill/pay.php
+[27-Apr-2026 13:19:20 Asia/Kathmandu] View not found: D:\xampp\htdocs\wallet/app/views/bill/pay.php
+[27-Apr-2026 13:19:20 Asia/Kathmandu] View not found: D:\xampp\htdocs\wallet/app/views/bill/pay.php
+[27-Apr-2026 13:19:21 Asia/Kathmandu] View not found: D:\xampp\htdocs\wallet/app/views/bill/pay.php
+[27-Apr-2026 13:19:21 Asia/Kathmandu] View not found: D:\xampp\htdocs\wallet/app/views/bill/pay.php
+[27-Apr-2026 13:19:21 Asia/Kathmandu] View not found: D:\xampp\htdocs\wallet/app/views/bill/pay.php
+[27-Apr-2026 13:19:22 Asia/Kathmandu] View not found: D:\xampp\htdocs\wallet/app/views/bill/pay.php
+[27-Apr-2026 13:19:22 Asia/Kathmandu] View not found: D:\xampp\htdocs\wallet/app/views/bill/pay.php
+[30-Apr-2026 06:52:19 Europe/Berlin] UNCAUGHT EXCEPTION: Undefined constant "BASE_PATH" in D:\xampp\htdocs\wallet\public\index.php:166
+[30-Apr-2026 06:52:19 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "APP_URL" in D:\xampp\htdocs\wallet\public\index.php:39
+Stack trace:
+#0 [internal function]: {closure}(Object(Error))
+#1 {main}
+  thrown in D:\xampp\htdocs\wallet\public\index.php on line 39
+[30-Apr-2026 06:52:19 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "APP_URL" in D:\xampp\htdocs\wallet\public\index.php:68
+Stack trace:
+#0 [internal function]: {closure}()
+#1 {main}
+  thrown in D:\xampp\htdocs\wallet\public\index.php on line 68
+[30-Apr-2026 06:53:23 Europe/Berlin] UNCAUGHT EXCEPTION: Undefined constant "BASE_PATH" in D:\xampp\htdocs\wallet\public\index.php:166
+[30-Apr-2026 06:53:23 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "APP_URL" in D:\xampp\htdocs\wallet\public\index.php:39
+Stack trace:
+#0 [internal function]: {closure}(Object(Error))
+#1 {main}
+  thrown in D:\xampp\htdocs\wallet\public\index.php on line 39
+[30-Apr-2026 06:53:23 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "APP_URL" in D:\xampp\htdocs\wallet\public\index.php:68
+Stack trace:
+#0 [internal function]: {closure}()
+#1 {main}
+  thrown in D:\xampp\htdocs\wallet\public\index.php on line 68
+[30-Apr-2026 10:43:27 Asia/Kathmandu] UNCAUGHT EXCEPTION: Typed static property NepalPay\Core\Logger::$logLevel must not be accessed before initialization in D:\xampp\htdocs\wallet\app\Core\Logger.php:49
+[30-Apr-2026 11:32:48 Asia/Kathmandu] PHP Fatal error:  Access level to AdminController::validateCSRF() must be protected (as in class Controller) or weaker in D:\xampp\htdocs\wallet\app\controller\AdminController.php on line 68
+[30-Apr-2026 11:32:48 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Access level to AdminController::validateCSRF() must be protected (as in class Controller) or weaker
+    [file] => D:\xampp\htdocs\wallet\app\controller\AdminController.php
+    [line] => 68
+)
+
+[30-Apr-2026 09:39:58 Europe/Berlin] PHP Warning:  Constant BASE_PATH already defined in D:\xampp\htdocs\wallet\app\bootstrap.php on line 17
+[30-Apr-2026 13:31:12 Asia/Kathmandu] UNCAUGHT EXCEPTION: Class "Beneficiary" not found in D:\xampp\htdocs\wallet\app\controller\WalletController.php:65
+[30-Apr-2026 14:06:36 Asia/Kathmandu] View not found: D:\xampp\htdocs\wallet/app/views/dashboard/profile.php
+[30-Apr-2026 14:06:54 Asia/Kathmandu] UNCAUGHT EXCEPTION: Class "Beneficiary" not found in D:\xampp\htdocs\wallet\app\controller\WalletController.php:65
+[30-Apr-2026 14:07:19 Asia/Kathmandu] View not found: D:\xampp\htdocs\wallet/app/views/bank/withdraw.php
+[30-Apr-2026 14:07:40 Asia/Kathmandu] UNCAUGHT EXCEPTION: Invalid field in paginate: 0 in D:\xampp\htdocs\wallet\app\models\Model.php:184
+[30-Apr-2026 14:07:54 Asia/Kathmandu] View not found: D:\xampp\htdocs\wallet/app/views/dashboard/profile.php
+[30-Apr-2026 14:14:51 Asia/Kathmandu] PHP Fatal error:  Access level to AdminController::validateCSRF() must be protected (as in class Controller) or weaker in D:\xampp\htdocs\wallet\app\controller\AdminController.php on line 68
+[30-Apr-2026 14:14:51 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Access level to AdminController::validateCSRF() must be protected (as in class Controller) or weaker
+    [file] => D:\xampp\htdocs\wallet\app\controller\AdminController.php
+    [line] => 68
+)
+
+[30-Apr-2026 14:18:20 Asia/Kathmandu] PHP Fatal error:  Access level to AdminController::validateCSRF() must be protected (as in class Controller) or weaker in D:\xampp\htdocs\wallet\app\controller\AdminController.php on line 68
+[30-Apr-2026 14:18:20 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Access level to AdminController::validateCSRF() must be protected (as in class Controller) or weaker
+    [file] => D:\xampp\htdocs\wallet\app\controller\AdminController.php
+    [line] => 68
+)
+
+[30-Apr-2026 14:18:21 Asia/Kathmandu] PHP Fatal error:  Access level to AdminController::validateCSRF() must be protected (as in class Controller) or weaker in D:\xampp\htdocs\wallet\app\controller\AdminController.php on line 68
+[30-Apr-2026 14:18:21 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Access level to AdminController::validateCSRF() must be protected (as in class Controller) or weaker
+    [file] => D:\xampp\htdocs\wallet\app\controller\AdminController.php
+    [line] => 68
+)
+
+[30-Apr-2026 14:18:22 Asia/Kathmandu] PHP Fatal error:  Access level to AdminController::validateCSRF() must be protected (as in class Controller) or weaker in D:\xampp\htdocs\wallet\app\controller\AdminController.php on line 68
+[30-Apr-2026 14:18:22 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Access level to AdminController::validateCSRF() must be protected (as in class Controller) or weaker
+    [file] => D:\xampp\htdocs\wallet\app\controller\AdminController.php
+    [line] => 68
+)
+
+[30-Apr-2026 14:24:47 Asia/Kathmandu] PHP Fatal error:  Access level to AdminController::validateCSRF() must be protected (as in class Controller) or weaker in D:\xampp\htdocs\wallet\app\controller\AdminController.php on line 68
+[30-Apr-2026 14:24:47 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Access level to AdminController::validateCSRF() must be protected (as in class Controller) or weaker
+    [file] => D:\xampp\htdocs\wallet\app\controller\AdminController.php
+    [line] => 68
+)
+
+[30-Apr-2026 14:24:50 Asia/Kathmandu] PHP Fatal error:  Access level to AdminController::validateCSRF() must be protected (as in class Controller) or weaker in D:\xampp\htdocs\wallet\app\controller\AdminController.php on line 68
+[30-Apr-2026 14:24:50 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Access level to AdminController::validateCSRF() must be protected (as in class Controller) or weaker
+    [file] => D:\xampp\htdocs\wallet\app\controller\AdminController.php
+    [line] => 68
+)
+
+[30-Apr-2026 14:25:20 Asia/Kathmandu] UNCAUGHT EXCEPTION: Invalid field in paginate: 0 in D:\xampp\htdocs\wallet\app\models\Model.php:184

@@ -1,0 +1,55 @@
+<?php
+// Lang data - move to DB for scalability
+
+return [
+    'en' => [
+        'login' => 'Login',
+        'register' => 'Register',
+        'dashboard' => 'Dashboard',
+        'wallet' => 'Wallet',
+        'send_money' => 'Send Money',
+        'add_money' => 'Add Money',
+        'balance' => 'Balance',
+        'logout' => 'Logout',
+        'admin' => 'Admin Panel',
+        'users' => 'Users',
+        'transactions' => 'Transactions',
+        'error' => 'Error',
+        'success' => 'Success',
+        'phone' => 'Phone',
+        'password' => 'Password',
+        'full_name' => 'Full Name',
+        'email' => 'Email',
+        'otp_verify' => 'Verify OTP',
+        'resend_otp' => 'Resend OTP',
+        'invalid_credentials' => 'Invalid credentials',
+        'account_frozen' => 'Account frozen',
+        'session_timeout' => 'Session timeout',
+    ],
+    'np' => [
+        'login' => 'लगइन',
+        'register' => 'दर्ता',
+        'dashboard' => 'ड्यासबोर्ड',
+        'wallet' => 'वॉलेट',
+        'send_money' => 'पैसा पठाउनुहोस्',
+        'add_money' => 'पैसा थप्नुहोस्',
+        'balance' => 'ब्यालेन्स',
+        'logout' => 'बाहिर निस्कनुहोस्',
+        'admin' => 'एडमिन प्यानल',
+        'users' => 'प्रयोगकर्ता',
+        'transactions' => 'लेनदेन',
+        'error' => 'गल्ती',
+        'success' => 'सफल',
+        'phone' => 'फोन',
+        'password' => 'पासवर्ड',
+        'full_name' => 'पूरा नाम',
+        'email' => 'इमेल',
+        'otp_verify' => 'OTP प्रमाणित गर्नुहोस्',
+        'resend_otp' => 'OTP फेरि पठाउनुहोस्',
+        'invalid_credentials' => 'गलत प्रमाणीकरण',
+        'account_frozen' => 'खाता फ्रिज गरिएको',
+        'session_timeout' => 'सत्र समय सकियो',
+    ]
+];
+?>
+

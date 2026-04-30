@@ -1,0 +1,13 @@
+[2026-04-30 10:44:50] app.ERROR: Rate limit record failed {"error":"SQLSTATE[42S02]: Base table or view not found: 1146 Table 'wallet.rate_limits' doesn't exist"} 
+[2026-04-30 10:45:05] app.ERROR: Rate limit record failed {"error":"SQLSTATE[42S02]: Base table or view not found: 1146 Table 'wallet.rate_limits' doesn't exist"} 
+[2026-04-30 10:45:39] app.ERROR: logger init test {"test":"ok"} 
+[2026-04-30 10:46:16] app.ERROR: Rate limit record failed {"error":"SQLSTATE[42S02]: Base table or view not found: 1146 Table 'wallet.rate_limits' doesn't exist"} 
+[2026-04-30 10:48:41] app.ERROR: Rate limit record failed {"error":"SQLSTATE[42S02]: Base table or view not found: 1146 Table 'wallet.rate_limits' doesn't exist"} 
+[2026-04-30 10:49:01] app.WARNING: Login attempt on locked account {"user_id":1} 
+[2026-04-30 11:32:47] app.ERROR: Rate limit reset failed {"error":"SQLSTATE[42S02]: Base table or view not found: 1146 Table 'wallet.rate_limits' doesn't exist"} 
+[2026-04-30 13:29:14] app.ERROR: Rate limit reset failed {"error":"SQLSTATE[42S02]: Base table or view not found: 1146 Table 'wallet.rate_limits' doesn't exist"} 
+[2026-04-30 13:29:36] app.ERROR: Rate limit record failed {"error":"SQLSTATE[42S02]: Base table or view not found: 1146 Table 'wallet.rate_limits' doesn't exist"} 
+[2026-04-30 13:30:32] app.ERROR: Rate limit reset failed {"error":"SQLSTATE[42S02]: Base table or view not found: 1146 Table 'wallet.rate_limits' doesn't exist"} 
+[2026-04-30 14:14:51] app.ERROR: Rate limit reset failed {"error":"SQLSTATE[42S02]: Base table or view not found: 1146 Table 'wallet.rate_limits' doesn't exist"} 
+[2026-04-30 14:25:47] app.ERROR: Rate limit record failed {"error":"SQLSTATE[42S02]: Base table or view not found: 1146 Table 'wallet.rate_limits' doesn't exist"} 
+[2026-04-30 14:27:13] app.ERROR: Rate limit reset failed {"error":"SQLSTATE[42S02]: Base table or view not found: 1146 Table 'wallet.rate_limits' doesn't exist"} 

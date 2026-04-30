@@ -1,0 +1,166 @@
+[2026-04-27 11:44:59] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:45:15] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:45:15] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:45:23] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:45:23] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:45:28] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:46:30] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:46:40] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:46:40] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:46:49] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:46:49] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:47:08] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:47:09] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:47:25] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:47:25] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:47:29] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:47:38] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:47:38] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:50:57] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:50:57] app.ERROR: Uncaught Exception: syntax error, unexpected token "public", expecting end of file in D:\xampp\htdocs\wallet\app\Services\AuthService.php:214 {"trace":"#0 D:\\xampp\\htdocs\\wallet\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('D:\\\\xampp\\\\htdocs...')
+#1 D:\\xampp\\htdocs\\wallet\\test_login_register.php(88): Composer\\Autoload\\ClassLoader->loadClass('NepalPay\\\\Servic...')
+#2 {main}","class":"ParseError"} 
+[2026-04-27 11:51:34] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:51:34] app.ERROR: Rate limit reset failed {"error":"SQLSTATE[42S02]: Base table or view not found: 1146 Table 'wallet.rate_limits' doesn't exist"} 
+[2026-04-27 11:51:34] app.ERROR: [Warning] session_name(): Session name cannot be changed after headers have already been sent in D:\xampp\htdocs\wallet\app\helpers\session.php:15  
+[2026-04-27 11:51:34] app.ERROR: [Warning] session_set_cookie_params(): Session cookie parameters cannot be changed after headers have already been sent in D:\xampp\htdocs\wallet\app\helpers\session.php:26  
+[2026-04-27 11:51:34] app.ERROR: [Warning] session_start(): Session cannot be started after headers have already been sent in D:\xampp\htdocs\wallet\app\helpers\session.php:29  
+[2026-04-27 11:51:34] app.ERROR: [Warning] session_name(): Session name cannot be changed after headers have already been sent in D:\xampp\htdocs\wallet\app\helpers\session.php:15  
+[2026-04-27 11:51:34] app.ERROR: [Warning] session_set_cookie_params(): Session cookie parameters cannot be changed after headers have already been sent in D:\xampp\htdocs\wallet\app\helpers\session.php:26  
+[2026-04-27 11:51:34] app.ERROR: [Warning] session_start(): Session cannot be started after headers have already been sent in D:\xampp\htdocs\wallet\app\helpers\session.php:29  
+[2026-04-27 11:51:34] app.ERROR: [Warning] session_name(): Session name cannot be changed after headers have already been sent in D:\xampp\htdocs\wallet\app\helpers\session.php:15  
+[2026-04-27 11:51:34] app.ERROR: [Warning] session_set_cookie_params(): Session cookie parameters cannot be changed after headers have already been sent in D:\xampp\htdocs\wallet\app\helpers\session.php:26  
+[2026-04-27 11:51:34] app.ERROR: [Warning] session_start(): Session cannot be started after headers have already been sent in D:\xampp\htdocs\wallet\app\helpers\session.php:29  
+[2026-04-27 11:51:34] app.ERROR: [Warning] session_name(): Session name cannot be changed after headers have already been sent in D:\xampp\htdocs\wallet\app\helpers\session.php:15  
+[2026-04-27 11:51:34] app.ERROR: [Warning] session_set_cookie_params(): Session cookie parameters cannot be changed after headers have already been sent in D:\xampp\htdocs\wallet\app\helpers\session.php:26  
+[2026-04-27 11:51:34] app.ERROR: [Warning] session_start(): Session cannot be started after headers have already been sent in D:\xampp\htdocs\wallet\app\helpers\session.php:29  
+[2026-04-27 11:51:46] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:51:55] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:52:06] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:53:09] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:53:10] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:53:21] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:53:30] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:53:31] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 11:56:10] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:28:53] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:29:49] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:29:49] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:30:01] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:30:01] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:30:04] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:38:16] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:38:47] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:38:48] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:39:30] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:40:20] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:40:20] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:40:27] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:40:27] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:40:35] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:40:35] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:40:38] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:40:48] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:40:48] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:49:44] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:49:45] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:50:23] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:50:24] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:50:24] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:51:16] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:51:16] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 12:51:16] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:02:47] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:02:47] app.ERROR: Rate limit reset failed {"error":"SQLSTATE[42S02]: Base table or view not found: 1146 Table 'wallet.rate_limits' doesn't exist"} 
+[2026-04-27 13:02:47] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:02:54] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:03:14] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:03:23] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:03:28] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:03:32] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:19:20] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:19:20] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:19:20] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:19:20] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:19:21] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:19:21] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:19:21] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:19:22] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:19:22] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:37:47] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:37:47] app.ERROR: Uncaught Exception: Class "User" not found in D:\xampp\htdocs\wallet\app\Services\TransactionPinService.php:34 {"trace":"#0 D:\\xampp\\htdocs\\wallet\\app\\Services\\TransactionPinService.php(45): NepalPay\\Services\\TransactionPinService::isPinSet(1)
+#1 D:\\xampp\\htdocs\\wallet\\app\\views\\bill\\pay.php(38): NepalPay\\Services\\TransactionPinService::isRequired(1)
+#2 D:\\xampp\\htdocs\\wallet\\app\\controller\\Controller.php(99): require('D:\\\\xampp\\\\htdocs...')
+#3 D:\\xampp\\htdocs\\wallet\\app\\controller\\BillController.php(37): Controller->render('bill/pay', Array)
+#4 D:\\xampp\\htdocs\\wallet\\public\\index.php(194): BillController->pay()
+#5 D:\\xampp\\htdocs\\wallet\\index.php(14): require('D:\\\\xampp\\\\htdocs...')
+#6 {main}","class":"Error"} 
+[2026-04-27 13:37:47] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:37:47] app.ERROR: Uncaught Exception: Class "User" not found in D:\xampp\htdocs\wallet\app\Services\TransactionPinService.php:34 {"trace":"#0 D:\\xampp\\htdocs\\wallet\\app\\Services\\TransactionPinService.php(45): NepalPay\\Services\\TransactionPinService::isPinSet(1)
+#1 D:\\xampp\\htdocs\\wallet\\app\\views\\bill\\pay.php(38): NepalPay\\Services\\TransactionPinService::isRequired(1)
+#2 D:\\xampp\\htdocs\\wallet\\app\\controller\\Controller.php(99): require('D:\\\\xampp\\\\htdocs...')
+#3 D:\\xampp\\htdocs\\wallet\\app\\controller\\BillController.php(37): Controller->render('bill/pay', Array)
+#4 D:\\xampp\\htdocs\\wallet\\public\\index.php(194): BillController->pay()
+#5 D:\\xampp\\htdocs\\wallet\\index.php(14): require('D:\\\\xampp\\\\htdocs...')
+#6 {main}","class":"Error"} 
+[2026-04-27 13:37:47] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:37:47] app.ERROR: Uncaught Exception: Class "User" not found in D:\xampp\htdocs\wallet\app\Services\TransactionPinService.php:34 {"trace":"#0 D:\\xampp\\htdocs\\wallet\\app\\Services\\TransactionPinService.php(45): NepalPay\\Services\\TransactionPinService::isPinSet(1)
+#1 D:\\xampp\\htdocs\\wallet\\app\\views\\bill\\pay.php(38): NepalPay\\Services\\TransactionPinService::isRequired(1)
+#2 D:\\xampp\\htdocs\\wallet\\app\\controller\\Controller.php(99): require('D:\\\\xampp\\\\htdocs...')
+#3 D:\\xampp\\htdocs\\wallet\\app\\controller\\BillController.php(37): Controller->render('bill/pay', Array)
+#4 D:\\xampp\\htdocs\\wallet\\public\\index.php(194): BillController->pay()
+#5 D:\\xampp\\htdocs\\wallet\\index.php(14): require('D:\\\\xampp\\\\htdocs...')
+#6 {main}","class":"Error"} 
+[2026-04-27 13:38:23] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:38:29] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:38:29] app.ERROR: Uncaught Exception: Class "User" not found in D:\xampp\htdocs\wallet\app\Services\TransactionPinService.php:34 {"trace":"#0 D:\\xampp\\htdocs\\wallet\\app\\Services\\TransactionPinService.php(45): NepalPay\\Services\\TransactionPinService::isPinSet(1)
+#1 D:\\xampp\\htdocs\\wallet\\app\\views\\bill\\pay.php(38): NepalPay\\Services\\TransactionPinService::isRequired(1)
+#2 D:\\xampp\\htdocs\\wallet\\app\\controller\\Controller.php(99): require('D:\\\\xampp\\\\htdocs...')
+#3 D:\\xampp\\htdocs\\wallet\\app\\controller\\BillController.php(37): Controller->render('bill/pay', Array)
+#4 D:\\xampp\\htdocs\\wallet\\public\\index.php(194): BillController->pay()
+#5 D:\\xampp\\htdocs\\wallet\\index.php(14): require('D:\\\\xampp\\\\htdocs...')
+#6 {main}","class":"Error"} 
+[2026-04-27 13:38:36] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:38:36] app.ERROR: Uncaught Exception: Class "User" not found in D:\xampp\htdocs\wallet\app\Services\TransactionPinService.php:34 {"trace":"#0 D:\\xampp\\htdocs\\wallet\\app\\Services\\TransactionPinService.php(45): NepalPay\\Services\\TransactionPinService::isPinSet(1)
+#1 D:\\xampp\\htdocs\\wallet\\app\\views\\bill\\pay.php(38): NepalPay\\Services\\TransactionPinService::isRequired(1)
+#2 D:\\xampp\\htdocs\\wallet\\app\\controller\\Controller.php(99): require('D:\\\\xampp\\\\htdocs...')
+#3 D:\\xampp\\htdocs\\wallet\\app\\controller\\BillController.php(37): Controller->render('bill/pay', Array)
+#4 D:\\xampp\\htdocs\\wallet\\public\\index.php(194): BillController->pay()
+#5 D:\\xampp\\htdocs\\wallet\\index.php(14): require('D:\\\\xampp\\\\htdocs...')
+#6 {main}","class":"Error"} 
+[2026-04-27 13:38:57] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:38:58] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:38:58] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:38:58] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:38:58] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:38:58] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:38:59] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:38:59] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:44:22] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 13:44:22] app.ERROR: Uncaught Exception: Class "User" not found in D:\xampp\htdocs\wallet\app\Services\TransactionPinService.php:34 {"trace":"#0 D:\\xampp\\htdocs\\wallet\\app\\Services\\TransactionPinService.php(45): NepalPay\\Services\\TransactionPinService::isPinSet(1)
+#1 D:\\xampp\\htdocs\\wallet\\app\\views\\bill\\pay.php(38): NepalPay\\Services\\TransactionPinService::isRequired(1)
+#2 D:\\xampp\\htdocs\\wallet\\app\\controller\\Controller.php(99): require('D:\\\\xampp\\\\htdocs...')
+#3 D:\\xampp\\htdocs\\wallet\\app\\controller\\BillController.php(37): Controller->render('bill/pay', Array)
+#4 D:\\xampp\\htdocs\\wallet\\public\\index.php(194): BillController->pay()
+#5 D:\\xampp\\htdocs\\wallet\\index.php(14): require('D:\\\\xampp\\\\htdocs...')
+#6 {main}","class":"Error"} 
+[2026-04-27 14:34:53] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 14:34:53] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 14:34:53] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 14:34:53] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 14:35:01] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 14:35:01] app.ERROR: Rate limit reset failed {"error":"SQLSTATE[42S02]: Base table or view not found: 1146 Table 'wallet.rate_limits' doesn't exist"} 
+[2026-04-27 14:35:01] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 14:35:12] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 14:35:18] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 14:35:18] app.ERROR: Uncaught Exception: Class "TransactionPinService" not found in D:\xampp\htdocs\wallet\app\controller\BillController.php:49 {"trace":"#0 D:\\xampp\\htdocs\\wallet\\public\\index.php(194): BillController->pay()
+#1 D:\\xampp\\htdocs\\wallet\\index.php(14): require('D:\\\\xampp\\\\htdocs...')
+#2 {main}","class":"Error"} 
+[2026-04-27 14:35:37] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 14:35:37] app.ERROR: Uncaught Exception: Class "TransactionPinService" not found in D:\xampp\htdocs\wallet\app\controller\BillController.php:49 {"trace":"#0 D:\\xampp\\htdocs\\wallet\\public\\index.php(194): BillController->pay()
+#1 D:\\xampp\\htdocs\\wallet\\index.php(14): require('D:\\\\xampp\\\\htdocs...')
+#2 {main}","class":"Error"} 
+[2026-04-27 14:36:27] app.INFO: Application booted {"env":"development"} 
+[2026-04-27 14:36:27] app.ERROR: Uncaught Exception: Class "TransactionPinService" not found in D:\xampp\htdocs\wallet\app\controller\BillController.php:49 {"trace":"#0 D:\\xampp\\htdocs\\wallet\\public\\index.php(194): BillController->pay()
+#1 D:\\xampp\\htdocs\\wallet\\index.php(14): require('D:\\\\xampp\\\\htdocs...')
+#2 {main}","class":"Error"} 

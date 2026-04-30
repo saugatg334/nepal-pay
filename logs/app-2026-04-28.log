@@ -1,0 +1,10 @@
+[2026-04-28 06:21:21] app.INFO: Application booted {"env":"development"} 
+[2026-04-28 06:21:21] app.INFO: Application booted {"env":"development"} 
+[2026-04-28 06:21:31] app.INFO: Application booted {"env":"development"} 
+[2026-04-28 06:21:31] app.ERROR: Rate limit reset failed {"error":"SQLSTATE[42S02]: Base table or view not found: 1146 Table 'wallet.rate_limits' doesn't exist"} 
+[2026-04-28 06:21:31] app.INFO: Application booted {"env":"development"} 
+[2026-04-28 06:21:40] app.INFO: Application booted {"env":"development"} 
+[2026-04-28 06:21:42] app.INFO: Application booted {"env":"development"} 
+[2026-04-28 06:21:42] app.ERROR: Uncaught Exception: Class "TransactionPinService" not found in D:\xampp\htdocs\wallet\app\controller\BillController.php:49 {"trace":"#0 D:\\xampp\\htdocs\\wallet\\public\\index.php(194): BillController->pay()
+#1 D:\\xampp\\htdocs\\wallet\\index.php(14): require('D:\\\\xampp\\\\htdocs...')
+#2 {main}","class":"Error"} 

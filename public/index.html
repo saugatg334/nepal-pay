@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NepalPay - Digital Wallet</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #06b6d4;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        .auth-container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .auth-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            background: white;
+            min-height: 600px;
+        }
+
+        .auth-left {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-left::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            top: -50px;
+            right: -50px;
+        }
+
+        .auth-left::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            bottom: -30px;
+            left: -30px;
+        }
+
+        .auth-left-content {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .auth-left-content h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .auth-left-content p {
+            font-size: 16px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .auth-right {
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: #f0f4f8;
+            cursor: pointer;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            color: #64748b;
+        }
+
+        .auth-tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .auth-tab:hover {
+            transform: translateY(-2px);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-control {
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 12px 15px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .password-toggle {
+            position: relative;
+        }
+
+        .password-toggle-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #64748b;
+            font-size: 16px;
+            z-index: 10;
+        }
+
+        .form-check {
+            margin-bottom: 20px;
+        }
+
+        .form-check-input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 4px;
+            accent-color: #667eea;
+        }
+
+        .form-check-label {
+            cursor: pointer;
+            color: #64748b;
+            font-size: 14px;
+            margin-left: 8px;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .forgot-password a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            color: #764ba2;
+        }
+
+        .btn-auth {
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-register {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-register:hover {
+            background: #f0f4f8;
+            transform: translateY(-2px);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: #e2e8f0;
+        }
+
+        .divider-text {
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .social-login {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn-social {
+            padding: 12px;
+            border: 1.5px solid #e2e8f0;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #1e293b;
+        }
+
+        .btn-social:hover {
+            border-color: #667eea;
+            background: #f8fafc;
+            transform: translateY(-2px);
+        }
+
+        .auth-footer {
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .auth-footer a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .auth-footer a:hover {
+            color: #764ba2;
+        }
+
+        .page-tab {
+            display: none;
+        }
+
+        .page-tab.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .auth-wrapper {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+
+            .auth-left {
+                display: none;
+            }
+
+            .auth-right {
+                padding: 30px 20px;
+            }
+
+            .auth-container {
+                margin: 20px;
+            }
+
+            .auth-icon {
+                font-size: 60px;
+            }
+
+            .auth-left-content h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-wrapper">
+            <!-- Left Side Illustration -->
+            <div class="auth-left">
+                <div class="auth-left-content">
+                    <div class="auth-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h2>Welcome to NepalPay</h2>
+                    <p>Fast, secure, and easy digital wallet for all your transactions</p>
+                </div>
+            </div>
+
+            <!-- Right Side Form -->
+            <div class="auth-right">
+                <!-- Tabs -->
+                <div class="auth-tabs">
+                    <button class="auth-tab active" onclick="switchTab('login')">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                    <button class="auth-tab" onclick="switchTab('register')">
+                        <i class="fas fa-user-plus"></i> Register
+                    </button>
+                </div>
+
+                <!-- LOGIN FORM -->
+                <div id="login" class="page-tab active">
+                    <h3 style="margin-bottom: 30px; color: #1e293b; font-weight: 700;">Sign In</h3>
+                    
+                    <form onsubmit="handleLogin(event)">
+                        <div class="form-group">
+                            <label class="form-label">Email or Username</label>
+                            <input type="text" class="form-control" placeholder="Enter your email or username" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <div class="password-toggle">
+                                <input type="password" class="form-control" id="loginPassword" placeholder="Enter your password" required>
+                                <button type="button" class="password-toggle-btn" onclick="togglePassword('loginPassword')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">
+                                Remember me
+                            </label>
+                        </div>
+
+                        <div class="forgot-password">
+                            <a href="#" onclick="switchTab('forgot'); return false;">Forgot password?</a>
+                        </div>
+
+                        <button type="submit" class="btn-auth btn-login">
+                            <i class="fas fa-sign-in-alt"></i> Sign In
+                        </button>
+                    </form>
+
+                    <div class="divider">
+                        <div class="divider-line"></div>
+                        <div class="divider-text">OR</div>
+                        <div class="divider-line"></div>
+                    </div>
+
+                    <div class="social-login">
+                        <button class="btn-social" onclick="showToast('Google login coming soon')">
+                            <i class="fab fa-google"></i> Google
+                        </button>
+                        <button class="btn-social" onclick="showToast('Facebook login coming soon')">
+                            <i class="fab fa-facebook"></i> Facebook
+                        </button>
+                    </div>
+
+                    <div class="auth-footer">
+                        Don't have an account? <a href="#" onclick="switchTab('register'); return false;">Create one</a>
+                    </div>
+                </div>
+
+                <!-- REGISTER FORM -->
+                <div id="register" class="page-tab">
+                    <h3 style="margin-bottom: 30px; color: #1e293b; font-weight: 700;">Create Account</h3>
+                    
+                    <form onsubmit="handleRegister(event)">
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" placeholder="Enter your full name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" placeholder="Enter your email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" placeholder="Enter your phone number" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" placeholder="Choose a username" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <div class="password-toggle">
+                                <input type="password" class="form-control" id="registerPassword" placeholder="Create a strong password" required>
+                                <button type="button" class="password-toggle-btn" onclick="togglePassword('registerPassword')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Confirm Password</label>
+                            <div class="password-toggle">
+                                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password" required>
+                                <button type="button" class="password-toggle-btn" onclick="togglePassword('confirmPassword')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="termsAccept" required>
+                            <label class="form-check-label" for="termsAccept">
+                                I agree to the <a href="#" style="color: #667eea;">Terms & Conditions</a>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn-auth btn-login">
+                            <i class="fas fa-user-plus"></i> Create Account
+                        </button>
+                    </form>
+
+                    <div class="auth-footer">
+                        Already have an account? <a href="#" onclick="switchTab('login'); return false;">Sign in</a>
+                    </div>
+                </div>
+
+                <!-- FORGOT PASSWORD FORM -->
+                <div id="forgot" class="page-tab">
+                    <h3 style="margin-bottom: 30px; color: #1e293b; font-weight: 700;">Reset Password</h3>
+                    
+                    <form onsubmit="handleForgot(event)">
+                        <p style="color: #64748b; margin-bottom: 20px; font-size: 14px;">
+                            Enter your email address and we'll send you a link to reset your password.
+                        </p>
+
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-control" placeholder="Enter your registered email" required>
+                        </div>
+
+                        <button type="submit" class="btn-auth btn-login">
+                            <i class="fas fa-paper-plane"></i> Send Reset Link
+                        </button>
+
+                        <div class="auth-footer" style="margin-top: 20px;">
+                            Remember your password? <a href="#" onclick="switchTab('login'); return false;">Sign in</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast-notification"></div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function switchTab(tab) {
+            // Hide all tabs
+            document.querySelectorAll('.page-tab').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.auth-tab').forEach(el => el.classList.remove('active'));
+
+            // Show selected tab
+            document.getElementById(tab).classList.add('active');
+            event.target.closest('.auth-tab').classList.add('active');
+        }
+
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const btn = event.target.closest('button');
+            const icon = btn.querySelector('i');
+
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                field.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            showToast('✅ Login successful! Redirecting...', 'success');
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1500);
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const password = document.getElementById('registerPassword').value;
+            const confirm = document.getElementById('confirmPassword').value;
+
+            if (password !== confirm) {
+                showToast('❌ Passwords do not match!', 'error');
+                return;
+            }
+
+            showToast('✅ Account created successfully! Redirecting...', 'success');
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1500);
+        }
+
+        function handleForgot(e) {
+            e.preventDefault();
+            showToast('✅ Reset link sent to your email!', 'success');
+            setTimeout(() => {
+                switchTab('login');
+            }, 1500);
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast-notification show';
+            toast.style.backgroundColor = type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#667eea';
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Add toast styles
+        const style = document.createElement('style');
+        style.textContent = `
+            .toast-notification {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #667eea;
+                color: white;
+                padding: 16px 24px;
+                border-radius: 10px;
+                font-weight: 500;
+                z-index: 9999;
+                opacity: 0;
+                transform: translateY(-20px);
+                transition: all 0.3s ease;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            }
+
+            .toast-notification.show {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            @media (max-width: 576px) {
+                .toast-notification {
+                    right: 10px;
+                    left: 10px;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+# NepalPay Wallet - Root Security Configuration
+# ==============================================
+
+# Deny access to all by default
+Options -Indexes
+ServerSignature Off
+
+# Block access to sensitive directories
+RedirectMatch 403 ^/wallet/(app|database|logs|sql|vendor|node_modules|tests)(/.*)?$
+
+# Block access to sensitive files
+<FilesMatch "\.(env|env\..*|log|sql|backup|bak|git|svn|htpasswd|pem|key)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+<FilesMatch "^\.">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# If someone tries to access app/ directly
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^app/ - [F,L]
+    RewriteRule ^database/ - [F,L]
+    RewriteRule ^logs/ - [F,L]
+    RewriteRule ^sql/ - [F,L]
+</IfModule>

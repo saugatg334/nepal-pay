@@ -1,0 +1,117 @@
+# NepalPay Wallet - Hardened Public Directory Security
+# =====================================================
+# NOTE: For production, uncomment HTTPS enforcement and HSTS sections below.
+
+# Prevent directory browsing
+Options -Indexes
+
+# Disable server signature
+ServerSignature Off
+
+# ─── HTTPS ENFORCEMENT (Uncomment for production) ───
+# <IfModule mod_rewrite.c>
+#     RewriteEngine On
+#     RewriteBase /wallet/public/
+#     
+#     # Redirect HTTP to HTTPS in production
+#     RewriteCond %{HTTPS} off
+#     RewriteCond %{HTTP:X-Forwarded-Proto} !https
+#     RewriteCond %{REQUEST_URI} !^/wallet/public/\.well-known/
+#     RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+#     
+#     # Don't rewrite actual files or directories
+#     RewriteCond %{REQUEST_FILENAME} !-f
+#     RewriteCond %{REQUEST_FILENAME} !-d
+#     
+#     # Route all requests to index.php
+#     RewriteRule ^(.*)$ index.php?%{QUERY_STRING} [QSA,L]
+# </IfModule>
+
+# ─── DEV-FRIENDLY REWRITE (No HTTPS redirect) ───
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /wallet/public/
+    
+    # Don't rewrite actual files or directories
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    
+    # Route all requests to index.php
+    RewriteRule ^(.*)$ index.php?%{QUERY_STRING} [QSA,L]
+</IfModule>
+
+# ─── BLOCK SENSITIVE FILES ───
+<FilesMatch "\.(env|log|sql|backup|bak|git|svn|htaccess|htpasswd)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+<FilesMatch "\.(yml|yaml|md|json|lock|dist|phar)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Protect hidden files
+<FilesMatch "^\.">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# ─── SECURITY HEADERS ───
+<IfModule mod_headers.c>
+    # X-Frame-Options - Prevent clickjacking
+    Header always set X-Frame-Options "DENY"
+    
+    # X-Content-Type-Options - Prevent MIME sniffing
+    Header always set X-Content-Type-Options "nosniff"
+    
+    # X-XSS-Protection - Enable XSS filter
+    Header always set X-XSS-Protection "1; mode=block"
+    
+    # Referrer-Policy - Control referrer info
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # Permissions-Policy - Restrict browser features
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(self), payment=()"
+    
+    # Content-Security-Policy - Restrict resource loading
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
+    
+    # Remove server signature
+    Header unset Server
+    Header unset X-Powered-By
+</IfModule>
+
+# ─── CACHE CONTROL FOR STATIC ASSETS ───
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+    ExpiresByType font/woff2 "access plus 6 months"
+</IfModule>
+
+# ─── COMPRESSION ───
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+    AddOutputFilterByType DEFLATE application/javascript application/json
+    AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
