@@ -1,0 +1,5 @@
+origin	https://github.com/saugatg334/nepal-pay.git (fetch)
+origin	https://github.com/saugatg334/nepal-pay.git (push)
+## master
+?? git_push_result.txt
+master
