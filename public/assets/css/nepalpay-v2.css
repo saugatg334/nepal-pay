@@ -1,0 +1,127 @@
+/**
+ * NepalPay v2.0 — Billion-Dollar Fintech Design System
+ * 
+ * Design Philosophy:
+ * - Apple-quality polish with purposeful whitespace
+ * - Stripe-level clarity in information hierarchy
+ * - PayPal-grade trust signals throughout
+ * - Revolut-style modern interactions
+ * - eSewa/Khalti local market familiarity
+ * 
+ * Brand Colors:
+ * Primary: #4f46e5 (Indigo 600)
+ * Accent: #10b981 (Emerald 500)
+ * Success: #22c55e (Green 500)
+ * Warning: #f59e0b (Amber 500)
+ * Danger: #ef4444 (Red 500)
+ */
+
+/* ============================================
+   CSS VARIABLES (Design Tokens)
+   ============================================ */
+:root {
+  /* Primary Palette */
+  --np-primary: #4f46e5;
+  --np-primary-dark: #4338ca;
+  --np-primary-light: #818cf8;
+  --np-primary-50: #eef2ff;
+  
+  /* Accent Palette */
+  --np-accent: #10b981;
+  --np-accent-dark: #059669;
+  --np-accent-light: #34d399;
+  --np-accent-50: #ecfdf5;
+  
+  /* Semantic Colors */
+  --np-success: #22c55e;
+  --np-success-bg: #f0fdf4;
+  --np-warning: #f59e0b;
+  --np-warning-bg: #fffbeb;
+  --np-danger: #ef4444;
+  --np-danger-bg: #fef2f2;
+  --np-info: #3b82f6;
+  --np-info-bg: #eff6ff;
+  
+  /* Neutral Scale */
+  --np-white: #ffffff;
+  --np-bg: #f8fafc;
+  --np-card: #ffffff;
+  --np-border: #e2e8f0;
+  --np-border-light: #f1f5f9;
+  --np-text: #1e293b;
+  --np-text-secondary: #64748b;
+  --np-text-muted: #94a3b8;
+  
+  /* Typography */
+  --np-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --np-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  
+  /* Spacing Scale */
+  --np-space-1: 0.25rem;
+  --np-space-2: 0.5rem;
+  --np-space-3: 0.75rem;
+  --np-space-4: 1rem;
+  --np-space-5: 1.25rem;
+  --np-space-6: 1.5rem;
+  --np-space-8: 2rem;
+  --np-space-10: 2.5rem;
+  --np-space-12: 3rem;
+  --np-space-16: 4rem;
+  --np-space-20: 5rem;
+  
+  /* Shadows */
+  --np-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --np-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --np-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --np-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --np-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --np-shadow-glow: 0 0 20px rgba(79, 70, 229, 0.15);
+  
+  /* Border Radius */
+  --np-radius-sm: 8px;
+  --np-radius: 12px;
+  --np-radius-lg: 16px;
+  --np-radius-xl: 24px;
+  --np-radius-full: 9999px;
+  
+  /* Transitions */
+  --np-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --np-transition-slow: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Layout */
+  --np-sidebar-width: 260px;
+  --np-header-height: 64px;
+  --np-max-content: 1280px;
+}
+
+/* ============================================
+   RESET & BASE
+   ============================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--np-font-sans);
+  background: var(--np-bg);
+  color: var(--np-text);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+a {
+  color: var(--np-primary);
+  text-decoration: none;
+  transition: var(--np-transition);
+}
+
+a:hover {
+  color: var(--np-primary-dark);

@@ -103,3 +103,193 @@ Stack trace:
 )
 
 [30-Apr-2026 14:25:20 Asia/Kathmandu] UNCAUGHT EXCEPTION: Invalid field in paginate: 0 in D:\xampp\htdocs\wallet\app\models\Model.php:184
+[30-Apr-2026 14:48:29 Asia/Kathmandu] PHP Fatal error:  Cannot declare class CSRF, because the name is already in use in D:\xampp\htdocs\wallet\app\helpers\csrf.php on line 4
+[30-Apr-2026 14:48:29 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Cannot declare class CSRF, because the name is already in use
+    [file] => D:\xampp\htdocs\wallet\app\helpers\csrf.php
+    [line] => 4
+)
+
+[30-Apr-2026 14:48:29 Asia/Kathmandu] PHP Fatal error:  Cannot declare class CSRF, because the name is already in use in D:\xampp\htdocs\wallet\app\helpers\csrf.php on line 4
+[30-Apr-2026 14:48:29 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Cannot declare class CSRF, because the name is already in use
+    [file] => D:\xampp\htdocs\wallet\app\helpers\csrf.php
+    [line] => 4
+)
+
+[30-Apr-2026 14:48:29 Asia/Kathmandu] PHP Fatal error:  Cannot declare class CSRF, because the name is already in use in D:\xampp\htdocs\wallet\app\helpers\csrf.php on line 4
+[30-Apr-2026 14:48:29 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Cannot declare class CSRF, because the name is already in use
+    [file] => D:\xampp\htdocs\wallet\app\helpers\csrf.php
+    [line] => 4
+)
+
+[30-Apr-2026 14:48:30 Asia/Kathmandu] PHP Fatal error:  Cannot declare class CSRF, because the name is already in use in D:\xampp\htdocs\wallet\app\helpers\csrf.php on line 4
+[30-Apr-2026 14:48:30 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Cannot declare class CSRF, because the name is already in use
+    [file] => D:\xampp\htdocs\wallet\app\helpers\csrf.php
+    [line] => 4
+)
+
+[30-Apr-2026 14:48:30 Asia/Kathmandu] PHP Fatal error:  Cannot declare class CSRF, because the name is already in use in D:\xampp\htdocs\wallet\app\helpers\csrf.php on line 4
+[30-Apr-2026 14:48:30 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Cannot declare class CSRF, because the name is already in use
+    [file] => D:\xampp\htdocs\wallet\app\helpers\csrf.php
+    [line] => 4
+)
+
+[30-Apr-2026 14:48:30 Asia/Kathmandu] PHP Fatal error:  Cannot declare class CSRF, because the name is already in use in D:\xampp\htdocs\wallet\app\helpers\csrf.php on line 4
+[30-Apr-2026 14:48:30 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Cannot declare class CSRF, because the name is already in use
+    [file] => D:\xampp\htdocs\wallet\app\helpers\csrf.php
+    [line] => 4
+)
+
+[30-Apr-2026 14:48:30 Asia/Kathmandu] PHP Fatal error:  Cannot declare class CSRF, because the name is already in use in D:\xampp\htdocs\wallet\app\helpers\csrf.php on line 4
+[30-Apr-2026 14:48:30 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Cannot declare class CSRF, because the name is already in use
+    [file] => D:\xampp\htdocs\wallet\app\helpers\csrf.php
+    [line] => 4
+)
+
+[30-Apr-2026 14:48:30 Asia/Kathmandu] PHP Fatal error:  Cannot declare class CSRF, because the name is already in use in D:\xampp\htdocs\wallet\app\helpers\csrf.php on line 4
+[30-Apr-2026 14:48:30 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Cannot declare class CSRF, because the name is already in use
+    [file] => D:\xampp\htdocs\wallet\app\helpers\csrf.php
+    [line] => 4
+)
+
+[30-Apr-2026 14:48:31 Asia/Kathmandu] PHP Fatal error:  Cannot declare class CSRF, because the name is already in use in D:\xampp\htdocs\wallet\app\helpers\csrf.php on line 4
+[30-Apr-2026 14:48:31 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Cannot declare class CSRF, because the name is already in use
+    [file] => D:\xampp\htdocs\wallet\app\helpers\csrf.php
+    [line] => 4
+)
+
+[30-Apr-2026 14:48:31 Asia/Kathmandu] PHP Fatal error:  Cannot declare class CSRF, because the name is already in use in D:\xampp\htdocs\wallet\app\helpers\csrf.php on line 4
+[30-Apr-2026 14:48:31 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Cannot declare class CSRF, because the name is already in use
+    [file] => D:\xampp\htdocs\wallet\app\helpers\csrf.php
+    [line] => 4
+)
+
+[30-Apr-2026 14:48:31 Asia/Kathmandu] PHP Fatal error:  Cannot declare class CSRF, because the name is already in use in D:\xampp\htdocs\wallet\app\helpers\csrf.php on line 4
+[30-Apr-2026 14:48:31 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Cannot declare class CSRF, because the name is already in use
+    [file] => D:\xampp\htdocs\wallet\app\helpers\csrf.php
+    [line] => 4
+)
+
+[30-Apr-2026 14:48:34 Asia/Kathmandu] PHP Fatal error:  Cannot declare class CSRF, because the name is already in use in D:\xampp\htdocs\wallet\app\helpers\csrf.php on line 4
+[30-Apr-2026 14:48:34 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Cannot declare class CSRF, because the name is already in use
+    [file] => D:\xampp\htdocs\wallet\app\helpers\csrf.php
+    [line] => 4
+)
+
+[30-Apr-2026 14:50:31 Asia/Kathmandu] PHP Fatal error:  Cannot declare class CSRF, because the name is already in use in D:\xampp\htdocs\wallet\app\helpers\csrf.php on line 4
+[30-Apr-2026 14:50:31 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Cannot declare class CSRF, because the name is already in use
+    [file] => D:\xampp\htdocs\wallet\app\helpers\csrf.php
+    [line] => 4
+)
+
+[30-Apr-2026 14:50:32 Asia/Kathmandu] UNCAUGHT EXCEPTION: Invalid field in paginate: 0 in D:\xampp\htdocs\wallet\app\models\Model.php:184
+[30-Apr-2026 14:50:33 Asia/Kathmandu] PHP Fatal error:  Cannot declare class CSRF, because the name is already in use in D:\xampp\htdocs\wallet\app\helpers\csrf.php on line 4
+[30-Apr-2026 14:50:33 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Cannot declare class CSRF, because the name is already in use
+    [file] => D:\xampp\htdocs\wallet\app\helpers\csrf.php
+    [line] => 4
+)
+
+[30-Apr-2026 14:50:34 Asia/Kathmandu] PHP Fatal error:  Cannot declare class CSRF, because the name is already in use in D:\xampp\htdocs\wallet\app\helpers\csrf.php on line 4
+[30-Apr-2026 14:50:34 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Cannot declare class CSRF, because the name is already in use
+    [file] => D:\xampp\htdocs\wallet\app\helpers\csrf.php
+    [line] => 4
+)
+
+[30-Apr-2026 14:50:35 Asia/Kathmandu] PHP Fatal error:  Cannot declare class CSRF, because the name is already in use in D:\xampp\htdocs\wallet\app\helpers\csrf.php on line 4
+[30-Apr-2026 14:50:35 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Cannot declare class CSRF, because the name is already in use
+    [file] => D:\xampp\htdocs\wallet\app\helpers\csrf.php
+    [line] => 4
+)
+
+[30-Apr-2026 14:50:35 Asia/Kathmandu] PHP Fatal error:  Cannot declare class CSRF, because the name is already in use in D:\xampp\htdocs\wallet\app\helpers\csrf.php on line 4
+[30-Apr-2026 14:50:35 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Cannot declare class CSRF, because the name is already in use
+    [file] => D:\xampp\htdocs\wallet\app\helpers\csrf.php
+    [line] => 4
+)
+
+[30-Apr-2026 14:50:37 Asia/Kathmandu] PHP Fatal error:  Cannot declare class CSRF, because the name is already in use in D:\xampp\htdocs\wallet\app\helpers\csrf.php on line 4
+[30-Apr-2026 14:50:37 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Cannot declare class CSRF, because the name is already in use
+    [file] => D:\xampp\htdocs\wallet\app\helpers\csrf.php
+    [line] => 4
+)
+
+[30-Apr-2026 14:50:39 Asia/Kathmandu] PHP Fatal error:  Cannot declare class CSRF, because the name is already in use in D:\xampp\htdocs\wallet\app\helpers\csrf.php on line 4
+[30-Apr-2026 14:50:39 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Cannot declare class CSRF, because the name is already in use
+    [file] => D:\xampp\htdocs\wallet\app\helpers\csrf.php
+    [line] => 4
+)
+
+[30-Apr-2026 14:50:40 Asia/Kathmandu] PHP Fatal error:  Cannot declare class CSRF, because the name is already in use in D:\xampp\htdocs\wallet\app\helpers\csrf.php on line 4
+[30-Apr-2026 14:50:40 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Cannot declare class CSRF, because the name is already in use
+    [file] => D:\xampp\htdocs\wallet\app\helpers\csrf.php
+    [line] => 4
+)
+
+[30-Apr-2026 14:50:43 Asia/Kathmandu] PHP Fatal error:  Cannot declare class CSRF, because the name is already in use in D:\xampp\htdocs\wallet\app\helpers\csrf.php on line 4
+[30-Apr-2026 14:50:43 Asia/Kathmandu] Shutdown error: Array
+(
+    [type] => 64
+    [message] => Cannot declare class CSRF, because the name is already in use
+    [file] => D:\xampp\htdocs\wallet\app\helpers\csrf.php
+    [line] => 4
+)
+

@@ -1,0 +1,19 @@
+> 38211cf (HEAD -> master) Initial commit
+> 22dc80e Initial commit
+< 399b1e1 (origin/master) blackboxai/paybills-debug: Add comprehensive debug logging for button/payment flow
+< 551406e Fix user logout - add missing logout method in AuthController
+< 42a21ee Fix admin logout link - redirect to admin logout instead of user logout
+< fe559e9 Add project structure documentation
+< 4105d7c Fix admin sidebar layout and unify login/register pages
+< 0e2a30a initial nepal pay wallet system
+< accf824 Add admin dashboard index
+< 52b0e0a Add admin deposits workflow: migration, admin controller, admin UI, update deposit flow and auth
+< 1146cc1 now 10% working
+< 9227f97 authcontler delete and fine the code
+< 1a96e49 Deleted autoload.php
+< 0b61727 UI: Replace dashboard with improved Tailwind layout + cleaner JS
+< 8000959 Merge remote changes, keep local README
+< 887c516 NepalPay wallet fintech demo: dashboard, auth, bills, providers, mock APIs, and receipt system
+< c297c38 Add new PHP wallet clone UI in public/wallet.php converted from React version
+< 3df15f9 jfjtvug
+< cb0f41d Initial commit
