@@ -146,7 +146,13 @@ $routes = [
     'admin_transactions' => ['controller' => 'AdminController', 'method' => 'transactions'],
     'admin_merchants' => ['controller' => 'AdminController', 'method' => 'merchants'],
     'toggle_merchant' => ['controller' => 'AdminController', 'method' => 'toggleMerchant'],
-    'admin_analytics' => ['controller' => 'AdminController', 'method' => 'analytics'],
+'admin_analytics' => ['controller' => 'AdminController', 'method' => 'analytics'],
+    // Chatbot routes
+    'chatbot' => ['controller' => 'ChatbotController', 'method' => 'message'],
+    'chatbot_history' => ['controller' => 'ChatbotController', 'method' => 'history'],
+    'chatbot_download' => ['controller' => 'ChatbotController', 'method' => 'download'],
+    'chatbot_tickets' => ['controller' => 'ChatbotController', 'method' => 'tickets'],
+    'chatbot_ticket_update' => ['controller' => 'ChatbotController', 'method' => 'ticketUpdate'],
 ];
 
 if (!array_key_exists($page, $routes)) {

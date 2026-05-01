@@ -195,5 +195,16 @@ window.addEventListener('load', () => {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="<?php echo APP_URL; ?>/public/assets/js/main.js"></script>
+
+<!-- Chatbot CSS -->
+<link rel="stylesheet" href="<?php echo APP_URL; ?>/public/assets/css/chatbot.css">
+
+<!-- Chatbot Widget (only for logged-in users) -->
+<?php if (Session::has('user_id')): ?>
+<?php require_once __DIR__ . '/../chatbot.php'; ?>
+<?php endif; ?>
+
+<!-- Chatbot JS -->
+<script src="<?php echo APP_URL; ?>/public/assets/js/chatbot.js" defer></script>
 </body>
 </html>
